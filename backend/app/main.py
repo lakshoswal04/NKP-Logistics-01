@@ -7,7 +7,7 @@ from slowapi.extension import _rate_limit_exceeded_handler
 
 from app.core.config import get_settings
 from app.core.limiter import limiter
-from app.routers import auth, leads, quotes, tracking
+from app.routers import ai, auth, leads, quotes, tracking
 
 logging.basicConfig(level=logging.INFO)
 
@@ -35,6 +35,7 @@ app.include_router(auth.router, prefix=API_V1)
 app.include_router(leads.router, prefix=API_V1)
 app.include_router(quotes.router, prefix=API_V1)
 app.include_router(tracking.router, prefix=API_V1)
+app.include_router(ai.router, prefix=API_V1)
 
 
 @app.get("/health", tags=["health"])
