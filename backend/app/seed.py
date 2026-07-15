@@ -77,11 +77,15 @@ def _events_for(shipment: Shipment, origin: str, dest: str, hours: int) -> list[
     else:
         flow = STATUS_FLOW[: STATUS_FLOW.index(target) + 1]
 
+    # A shipment still moving should sit mid-route, not at the destination
+    reached_destination = flow[-1] == ShipmentStatus.delivered
+    max_progress = 1.0 if reached_destination else 0.62
+
     start = NOW - timedelta(hours=max(hours, len(flow)))
     step = max(hours, len(flow)) / len(flow)
     events = []
     for i, status in enumerate(flow):
-        t = i / max(len(flow) - 1, 1)
+        t = (i / max(len(flow) - 1, 1)) * max_progress
         lat, lng = _midpoint(o, d, t)
         events.append(
             ShipmentEvent(
