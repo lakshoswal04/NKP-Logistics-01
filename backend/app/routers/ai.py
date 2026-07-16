@@ -110,6 +110,84 @@ async def copilot_suggestions():
     return {"suggestions": copilot.SUGGESTIONS}
 
 
+@router.get("/insights/overview")
+async def insights_overview(
+    db: AsyncSession = Depends(get_db),
+    user: User = Depends(require_role(UserRole.admin)),
+):
+    """Admin-only: headline numbers for the admin overview, straight from the DB."""
+    from datetime import timedelta
+
+    from sqlalchemy import func
+
+    from app.models import Lead, Quote
+
+    status_rows = (await db.execute(select(Shipment.status, func.count()).group_by(Shipment.status))).all()
+    by_status = {s.value: c for s, c in status_rows}
+    leads_30d = (
+        await db.execute(
+            select(func.count())
+            .select_from(Lead)
+            .where(Lead.created_at >= datetime.now(UTC) - timedelta(days=30))
+        )
+    ).scalar()
+    quote_value, quote_count = (
+        await db.execute(select(func.coalesce(func.sum(Quote.price_max), 0), func.count()).select_from(Quote))
+    ).one()
+    return {
+        "shipments_total": sum(by_status.values()),
+        "shipments_by_status": by_status,
+        "active": sum(
+            by_status.get(s, 0) for s in ("picked_up", "in_transit", "out_for_delivery", "delayed")
+        ),
+        "leads_last_30d": leads_30d,
+        "quotes_count": quote_count,
+        "quotes_value_max": float(quote_value),
+    }
+
+
+@router.get("/insights/fraud-queue")
+async def fraud_queue(
+    user: User = Depends(require_role(UserRole.admin)),
+):
+    """Admin-only: recent bookings scored by the fraud model, riskiest first.
+
+    Until real booking volume exists, this scores a demo batch drawn from the
+    synthetic booking stream (clearly labelled in the UI).
+    """
+    from app.ml.datagen import generate_bookings
+
+    batch = generate_bookings(n=4000, seed=99).tail(300)
+    items = []
+    for i, (_, row) in enumerate(batch.iterrows()):
+        signals = {
+            "account_age_days": float(row["account_age_days"]),
+            "bookings_last_24h": int(row["bookings_last_24h"]),
+            "declared_value_inr": float(row["declared_value_inr"]),
+            "weight_kg": float(row["weight_kg"]),
+            "payment_cod": int(row["payment_cod"]),
+            "address_mismatch": int(row["address_mismatch"]),
+            "night_booking": int(row["night_booking"]),
+            "claims_ratio": float(row["claims_ratio"]),
+            "new_lane_for_customer": int(row["new_lane_for_customer"]),
+        }
+        r = predict.predict_fraud(signals)
+        if r["risk_level"] == "low":
+            continue
+        items.append(
+            {
+                "booking_ref": f"BK-{7400 + i}",
+                "fraud_probability": r["fraud_probability"],
+                "risk_level": r["risk_level"],
+                "declared_value_inr": signals["declared_value_inr"],
+                "account_age_days": int(signals["account_age_days"]),
+                "top_reason": r["reasons"][0]["label"] if r["reasons"] else None,
+            }
+        )
+    items.sort(key=lambda x: -x["fraud_probability"])
+    return {"items": items[:8], "scored": len(batch), "source": "demo bookings (synthetic)"}
+
+
 @router.get("/insights/delay-queue", response_model=list[DelayQueueItem])
 async def delay_queue(
     db: AsyncSession = Depends(get_db),

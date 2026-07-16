@@ -4,12 +4,12 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { Reveal } from "@/components/ui/Reveal";
 import { CtaBand } from "@/components/marketing/CtaBand";
 import { PageHeader } from "@/components/marketing/PageHeader";
-import { AI_FEATURES } from "@/lib/content";
+import { Playground } from "@/components/ai/Playground";
 
 export const metadata: Metadata = {
   title: "AI & Technology",
   description:
-    "The AI layer behind NKP Logistics: route optimization, ETA and delay prediction, fraud detection, demand forecasting and an operations copilot.",
+    "Try NKP's AI layer live: route optimization, ETA and delay prediction, fraud detection, demand forecasting and an operations copilot — real models, real metrics.",
 };
 
 export default function TechnologyPage() {
@@ -17,29 +17,19 @@ export default function TechnologyPage() {
     <>
       <PageHeader
         eyebrow="AI & Technology"
-        title="Logistics decisions, made before problems happen"
-        text="Every shipment on our network feeds models that plan routes, predict delays and flag risk — so our operations team acts early, and your deliveries arrive on time."
+        title="Don't take our word for it — try the models"
+        text="Every feature below is running live against trained models. The accuracy badges are real held-out evaluation metrics, and every output is labelled for what it is: an estimate that assists a human decision."
       />
 
-      {/* AI core visual band */}
-      <section className="relative mx-auto max-w-7xl overflow-hidden px-6 py-10">
+      {/* live playground */}
+      <section className="relative mx-auto max-w-7xl overflow-hidden px-6 py-6">
         <div
           aria-hidden
-          className="pointer-events-none absolute left-1/2 top-1/2 h-72 w-[42rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/15 blur-3xl"
+          className="pointer-events-none absolute left-1/2 top-24 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-accent/12 blur-3xl"
         />
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {AI_FEATURES.map((f, i) => (
-            <Reveal key={f.title} delay={i * 0.06}>
-              <GlassCard className="h-full p-7">
-                <span className="font-display text-sm font-semibold text-accent">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h2 className="mt-3 font-display text-lg font-semibold">{f.title}</h2>
-                <p className="mt-2 text-sm leading-relaxed text-ink-2">{f.text}</p>
-              </GlassCard>
-            </Reveal>
-          ))}
-        </div>
+        <Reveal>
+          <Playground />
+        </Reveal>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-14">
@@ -49,7 +39,9 @@ export default function TechnologyPage() {
             <p className="mt-4 max-w-3xl text-lg leading-relaxed text-ink-2">
               AI on our platform assists — it never silently decides. Predictions are labelled as
               estimates, and every AI-suggested action that would change a shipment, price or
-              account is confirmed by a person before it happens.
+              account is confirmed by a person before it happens. Models currently train on a
+              synthetic corpus modelled on Indian freight patterns and retrain on real network
+              history as it accumulates.
             </p>
           </GlassCard>
         </Reveal>
