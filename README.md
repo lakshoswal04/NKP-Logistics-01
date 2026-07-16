@@ -24,8 +24,8 @@ cp frontend.env.example frontend/.env
 docker compose up --build
 ```
 
-- Web: http://localhost:3000
-- API docs: http://localhost:8000/docs
+- Web: http://localhost:5001
+- API docs: http://localhost:8080/docs
 - Migrations + demo seed data run automatically. Try tracking ID **NKP2026A1B2**.
 
 ## Quick start (native, no Docker)
@@ -41,7 +41,7 @@ cp ../backend.env.example .env   # adjust DATABASE_URL for your local Postgres
 createdb nkp_logistics
 alembic upgrade head
 python -m app.seed
-uvicorn app.main:app --reload --port 8000
+uvicorn app.main:app --reload --port 8080
 
 # Web (second terminal)
 cd frontend
