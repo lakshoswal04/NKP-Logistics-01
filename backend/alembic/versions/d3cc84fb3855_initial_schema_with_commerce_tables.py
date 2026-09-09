@@ -1,8 +1,8 @@
-"""initial schema
+"""initial schema with commerce tables
 
-Revision ID: b0819a42e352
+Revision ID: d3cc84fb3855
 Revises: 
-Create Date: 2026-07-16 01:08:09.791891
+Create Date: 2026-09-10 02:51:31.891041
 
 """
 from collections.abc import Sequence
@@ -11,7 +11,7 @@ import sqlalchemy as sa
 
 from alembic import op
 
-revision: str = 'b0819a42e352'
+revision: str = 'd3cc84fb3855'
 down_revision: str | None = None
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
@@ -26,6 +26,7 @@ def upgrade() -> None:
     sa.Column('email', sa.String(length=255), nullable=True),
     sa.Column('phone', sa.String(length=20), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
+    sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('leads',
@@ -39,8 +40,28 @@ def upgrade() -> None:
     sa.Column('industry', sa.String(length=100), nullable=True),
     sa.Column('status', sa.Enum('new', 'contacted', 'converted', 'closed', name='leadstatus'), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
+    sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('support_tickets',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('ticket_id', sa.String(length=20), nullable=False),
+    sa.Column('category', sa.String(length=60), nullable=False),
+    sa.Column('subject', sa.String(length=255), nullable=False),
+    sa.Column('body', sa.Text(), nullable=False),
+    sa.Column('full_name', sa.String(length=255), nullable=True),
+    sa.Column('email', sa.String(length=255), nullable=False),
+    sa.Column('phone', sa.String(length=20), nullable=True),
+    sa.Column('tracking_id', sa.String(length=20), nullable=True),
+    sa.Column('status', sa.Enum('open', 'in_progress', 'resolved', 'closed', name='ticketstatus'), nullable=False),
+    sa.Column('ai_category', sa.String(length=60), nullable=True),
+    sa.Column('ai_summary', sa.Text(), nullable=True),
+    sa.Column('ai_suggested_reply', sa.Text(), nullable=True),
+    sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
+    sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_support_tickets_ticket_id'), 'support_tickets', ['ticket_id'], unique=True)
     op.create_table('addresses',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('company_id', sa.Integer(), nullable=True),
@@ -69,6 +90,7 @@ def upgrade() -> None:
     sa.Column('currency', sa.String(length=3), nullable=False),
     sa.Column('lead_id', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
+    sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.ForeignKeyConstraint(['lead_id'], ['leads.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -88,6 +110,7 @@ def upgrade() -> None:
     sa.Column('pickup_date', sa.DateTime(timezone=True), nullable=True),
     sa.Column('eta', sa.DateTime(timezone=True), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
+    sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.ForeignKeyConstraint(['company_id'], ['companies.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -102,6 +125,7 @@ def upgrade() -> None:
     sa.Column('is_active', sa.Boolean(), nullable=False),
     sa.Column('company_id', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
+    sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.ForeignKeyConstraint(['company_id'], ['companies.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -114,10 +138,41 @@ def upgrade() -> None:
     sa.Column('filename', sa.String(length=255), nullable=False),
     sa.Column('url', sa.String(length=1024), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
+    sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.ForeignKeyConstraint(['company_id'], ['companies.id'], ),
     sa.ForeignKeyConstraint(['shipment_id'], ['shipments.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('invoices',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('number', sa.String(length=40), nullable=False),
+    sa.Column('company_id', sa.Integer(), nullable=True),
+    sa.Column('shipment_id', sa.Integer(), nullable=True),
+    sa.Column('status', sa.Enum('draft', 'sent', 'paid', 'overdue', 'void', name='invoicestatus'), nullable=False),
+    sa.Column('issue_date', sa.Date(), nullable=False),
+    sa.Column('due_date', sa.Date(), nullable=False),
+    sa.Column('bill_to_name', sa.String(length=255), nullable=False),
+    sa.Column('bill_to_gstin', sa.String(length=15), nullable=True),
+    sa.Column('bill_to_email', sa.String(length=255), nullable=True),
+    sa.Column('bill_to_address', sa.String(length=500), nullable=True),
+    sa.Column('place_of_supply', sa.String(length=100), nullable=True),
+    sa.Column('currency', sa.String(length=3), nullable=False),
+    sa.Column('subtotal_paise', sa.BigInteger(), nullable=False),
+    sa.Column('cgst_paise', sa.BigInteger(), nullable=False),
+    sa.Column('sgst_paise', sa.BigInteger(), nullable=False),
+    sa.Column('igst_paise', sa.BigInteger(), nullable=False),
+    sa.Column('total_paise', sa.BigInteger(), nullable=False),
+    sa.Column('amount_paid_paise', sa.BigInteger(), nullable=False),
+    sa.Column('notes', sa.Text(), nullable=True),
+    sa.Column('sent_at', sa.DateTime(timezone=True), nullable=True),
+    sa.Column('paid_at', sa.DateTime(timezone=True), nullable=True),
+    sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
+    sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
+    sa.ForeignKeyConstraint(['company_id'], ['companies.id'], ),
+    sa.ForeignKeyConstraint(['shipment_id'], ['shipments.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_invoices_number'), 'invoices', ['number'], unique=True)
     op.create_table('shipment_events',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('shipment_id', sa.Integer(), nullable=False),
@@ -130,12 +185,51 @@ def upgrade() -> None:
     sa.ForeignKeyConstraint(['shipment_id'], ['shipments.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('invoice_line_items',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('invoice_id', sa.Integer(), nullable=False),
+    sa.Column('description', sa.String(length=500), nullable=False),
+    sa.Column('hsn_sac', sa.String(length=10), nullable=True),
+    sa.Column('quantity', sa.Float(), nullable=False),
+    sa.Column('unit', sa.String(length=20), nullable=True),
+    sa.Column('unit_price_paise', sa.BigInteger(), nullable=False),
+    sa.Column('tax_rate', sa.Float(), nullable=False),
+    sa.Column('amount_paise', sa.BigInteger(), nullable=False),
+    sa.ForeignKeyConstraint(['invoice_id'], ['invoices.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('payments',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('invoice_id', sa.Integer(), nullable=False),
+    sa.Column('provider', sa.String(length=30), nullable=False),
+    sa.Column('provider_order_id', sa.String(length=120), nullable=True),
+    sa.Column('provider_payment_id', sa.String(length=120), nullable=True),
+    sa.Column('provider_signature', sa.String(length=255), nullable=True),
+    sa.Column('amount_paise', sa.BigInteger(), nullable=False),
+    sa.Column('currency', sa.String(length=3), nullable=False),
+    sa.Column('status', sa.Enum('created', 'authorized', 'captured', 'failed', 'refunded', name='paymentstatus'), nullable=False),
+    sa.Column('method', sa.String(length=40), nullable=True),
+    sa.Column('error_description', sa.String(length=500), nullable=True),
+    sa.Column('raw_payload', sa.JSON(), nullable=True),
+    sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
+    sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
+    sa.ForeignKeyConstraint(['invoice_id'], ['invoices.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_payments_provider_order_id'), 'payments', ['provider_order_id'], unique=False)
+    op.create_index(op.f('ix_payments_provider_payment_id'), 'payments', ['provider_payment_id'], unique=False)
     # ### end Alembic commands ###
 
 
 def downgrade() -> None:
     # ### commands auto generated by Alembic - please adjust! ###
+    op.drop_index(op.f('ix_payments_provider_payment_id'), table_name='payments')
+    op.drop_index(op.f('ix_payments_provider_order_id'), table_name='payments')
+    op.drop_table('payments')
+    op.drop_table('invoice_line_items')
     op.drop_table('shipment_events')
+    op.drop_index(op.f('ix_invoices_number'), table_name='invoices')
+    op.drop_table('invoices')
     op.drop_table('documents')
     op.drop_index(op.f('ix_users_email'), table_name='users')
     op.drop_table('users')
@@ -143,6 +237,8 @@ def downgrade() -> None:
     op.drop_table('shipments')
     op.drop_table('quotes')
     op.drop_table('addresses')
+    op.drop_index(op.f('ix_support_tickets_ticket_id'), table_name='support_tickets')
+    op.drop_table('support_tickets')
     op.drop_table('leads')
     op.drop_table('companies')
     # ### end Alembic commands ###
