@@ -1,58 +1,145 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------------
+   NKP Logistics design tokens
+
+   Light-first, red on near-black. The page alternates full-bleed bands —
+   white, mist, ink — which is what gives a logistics site its editorial,
+   operational feel rather than the uniform dark surface of a SaaS template.
+   --------------------------------------------------------------------------- */
+
 @theme {
-  /* PRD §11.1 color tokens */
-  --color-base: #0a0a0d;
-  --color-surface: #121216;
-  --color-ink: #f5f5f7;
-  --color-ink-2: #9a9aa5;
-  --color-ink-3: #6b6b75;
-  --color-accent: #2e5bff;
-  --color-accent-hover: #4a6fff;
-  --color-success: #22c55e;
-  --color-warning: #f5a524;
-  --color-danger: #ef4444;
-  --color-line: rgb(255 255 255 / 0.08);
+  /* Neutrals */
+  --color-ink: #101014;
+  --color-ink-2: #4a4a55;
+  --color-ink-3: #7a7a88;
+  --color-paper: #ffffff;
+  --color-mist: #f4f5f7;
+  --color-line: rgb(16 16 20 / 0.10);
+  --color-line-strong: rgb(16 16 20 / 0.18);
 
-  --font-sans: var(--font-general), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-clash), var(--font-general), sans-serif;
+  /* On dark bands */
+  --color-ink-inverse: #f7f7f9;
+  --color-ink-inverse-2: #a9a9b6;
+  --color-line-inverse: rgb(255 255 255 / 0.14);
+
+  /* Brand */
+  --color-brand: #e1252b;
+  --color-brand-hover: #b81419;
+  --color-brand-soft: #fdeced;
+
+  /* Status */
+  --color-success: #137a3f;
+  --color-success-soft: #e6f4ec;
+  --color-warning: #a86a00;
+  --color-warning-soft: #fdf1dd;
+  --color-danger: #c22026;
+  --color-danger-soft: #fdecec;
+  --color-info: #1d4ed8;
+  --color-info-soft: #e8eeff;
+
+  /* Type */
+  --font-sans: var(--font-general), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-clash), var(--font-general), ui-sans-serif, sans-serif;
+
+  /* Rhythm — section padding is used often enough to be a token */
+  --spacing-band: 5.5rem;
+  --spacing-band-lg: 7.5rem;
 }
 
-/* Signature chrome-gradient display text (hero headlines only) */
-@utility chrome-text {
-  background-image: linear-gradient(180deg, #f7f7f9 0%, #a9a9b2 55%, #ececef 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* ---------------------------------------------------------------------------
+   Signature devices
+   --------------------------------------------------------------------------- */
+
+/* The short red rule beneath a section heading. The most repeated device in
+   the layout — it is what ties the bands together. */
+@utility rule-red {
+  &::after {
+    content: "";
+    display: block;
+    width: 4.5rem;
+    height: 3px;
+    margin-top: 1.25rem;
+    background: var(--color-brand);
+  }
 }
 
-/* Glassmorphic floating card */
-@utility glass {
-  background: rgb(18 18 22 / 0.62);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgb(255 255 255 / 0.08);
+/* Small solid red square used as an inline separator between service chips. */
+@utility chip-sep {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--color-brand);
+  vertical-align: middle;
 }
 
-/* Eyebrow/label style: uppercase + tracking (PRD §11.2) */
+/* Uppercase micro-label above a heading. */
 @utility eyebrow {
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.75rem;
-  font-weight: 500;
+  letter-spacing: 0.1em;
+  font-size: 0.6875rem;
+  font-weight: 600;
   color: var(--color-ink-3);
 }
 
+/* Scrim over a hero photograph. Dark at the left where the headline sits,
+   clearing to the right so the image is still legible. Two stops rather than
+   a flat overlay, so the photo never looks like it is behind grey glass. */
+@utility hero-scrim {
+  background:
+    linear-gradient(90deg, rgb(10 10 12 / 0.92) 0%, rgb(10 10 12 / 0.72) 38%, rgb(10 10 12 / 0.18) 78%, rgb(10 10 12 / 0.05) 100%),
+    linear-gradient(180deg, rgb(10 10 12 / 0.45) 0%, transparent 30%);
+}
+
+/* Softer scrim for interior page heroes, which carry less text. */
+@utility hero-scrim-soft {
+  background: linear-gradient(90deg, rgb(10 10 12 / 0.85) 0%, rgb(10 10 12 / 0.55) 45%, rgb(10 10 12 / 0.10) 90%);
+}
+
+/* Caption plate anchored to the bottom of a photo card. */
+@utility photo-caption {
+  background: linear-gradient(180deg, transparent 0%, rgb(10 10 12 / 0.85) 100%);
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
 :focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 ::selection {
-  background: var(--color-accent);
+  background: var(--color-brand);
   color: #fff;
 }
 
+/* Next 16 no longer overrides scroll-behavior during navigation, so opting in
+   is now explicit — see the data-scroll-behavior attribute on <html>. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -62,4 +149,24 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Marquee for the alert ticker. Duplicated content inside the track means the
+   loop is seamless at exactly -50%. */
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@utility animate-ticker {
+  animation: ticker 42s linear infinite;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@utility animate-fade-up {
+  animation: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageHeader } from "@/components/marketing/PageHeader";
+import { PageHeader } from "@/components/site/PageHeader";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",

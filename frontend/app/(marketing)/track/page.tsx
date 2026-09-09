@@ -1,24 +1,58 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { PageHeader } from "@/components/marketing/PageHeader";
+
+import { PageHeader } from "@/components/site/PageHeader";
 import { TrackingView } from "@/components/tracking/TrackingView";
+import { Section, SectionHeading } from "@/components/ui/Section";
+import { SUPPORT_CATEGORIES } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Track Shipment",
-  description: "Track any NKP Logistics shipment live with just a tracking ID — no login required.",
+  title: "Track a consignment",
+  description:
+    "Track an NKP consignment by AWB, order ID or LRN. No sign-in and no OTP required.",
 };
+
+const TRACK_FAQS = SUPPORT_CATEGORIES.find((c) => c.slug === "shipments")!.topics;
 
 export default function TrackPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Track shipment"
-        title="Where's my shipment?"
-        text="Enter your tracking ID to see live status, route progress and the full event timeline."
+        eyebrow="Track"
+        title="Where is my consignment?"
+        text="Enter an AWB, order ID or lorry receipt number. Tracking is public — we will never ask you for an OTP, a UPI PIN or card details to show it."
       />
-      <Suspense>
-        <TrackingView />
-      </Suspense>
+
+      <Section tone="paper">
+        <Suspense fallback={<p className="text-[14px] text-ink-3">Loading…</p>}>
+          <TrackingView />
+        </Suspense>
+      </Section>
+
+      <Section tone="mist">
+        <SectionHeading strong="Frequently asked" />
+        <div className="mt-10 grid max-w-[900px] gap-3">
+          {TRACK_FAQS.map((faq) => (
+            <details
+              key={faq.q}
+              className="group border border-line bg-white open:border-line-strong"
+            >
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 text-[14.5px] font-semibold text-ink">
+                {faq.q}
+                <span
+                  className="shrink-0 text-[20px] font-normal text-brand transition-transform group-open:rotate-45"
+                  aria-hidden
+                >
+                  +
+                </span>
+              </summary>
+              <p className="border-t border-line px-5 py-4 text-[13.5px] leading-relaxed text-ink-2">
+                {faq.a}
+              </p>
+            </details>
+          ))}
+        </div>
+      </Section>
     </>
   );
 }

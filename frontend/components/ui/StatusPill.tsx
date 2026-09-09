@@ -1,26 +1,36 @@
 import { cn } from "@/lib/cn";
-import type { ShipmentStatus } from "@/lib/api";
 
-const tone: Record<string, string> = {
-  delivered: "bg-success/15 text-success",
-  in_transit: "bg-accent/15 text-accent-hover",
-  out_for_delivery: "bg-accent/15 text-accent-hover",
-  picked_up: "bg-warning/15 text-warning",
-  booked: "bg-warning/15 text-warning",
-  delayed: "bg-danger/15 text-danger",
-  failed: "bg-danger/15 text-danger",
+const TONES: Record<string, string> = {
+  delivered: "bg-success-soft text-success",
+  in_transit: "bg-info-soft text-info",
+  out_for_delivery: "bg-info-soft text-info",
+  picked_up: "bg-warning-soft text-warning",
+  booked: "bg-mist text-ink-2",
+  delayed: "bg-danger-soft text-danger",
+  failed: "bg-danger-soft text-danger",
+  // Invoice + payment states share the component.
+  paid: "bg-success-soft text-success",
+  captured: "bg-success-soft text-success",
+  sent: "bg-info-soft text-info",
+  draft: "bg-mist text-ink-2",
+  overdue: "bg-danger-soft text-danger",
+  void: "bg-mist text-ink-3",
+  open: "bg-warning-soft text-warning",
+  in_progress: "bg-info-soft text-info",
+  resolved: "bg-success-soft text-success",
+  closed: "bg-mist text-ink-3",
 };
 
-export function StatusPill({ status, className }: { status: ShipmentStatus | string; className?: string }) {
+export function StatusPill({ status, className }: { status: string; className?: string }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full px-3 py-1 text-xs font-medium lowercase",
-        tone[status] ?? "bg-white/10 text-ink-2",
+        "inline-flex items-center rounded-[2px] px-2.5 py-1 text-[11.5px] font-semibold uppercase tracking-wide",
+        TONES[status] ?? "bg-mist text-ink-2",
         className,
       )}
     >
-      {String(status).replaceAll("_", " ")}
+      {status.replaceAll("_", " ")}
     </span>
   );
 }

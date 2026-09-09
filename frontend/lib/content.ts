@@ -1,203 +1,368 @@
+/**
+ * Site copy in one place.
+ *
+ * NKP is a warehousing and fulfilment specialist — not a full-stack carrier —
+ * so the copy deliberately never claims line-haul, air or cross-border services
+ * we do not run. Where shipments move, they move through partner carriers, and
+ * the wording says so.
+ */
+
 export const COMPANY = {
   name: "NKP Logistics",
-  phone: "+91 90000 00000",
+  legalName: "NKP Logistics Pvt Ltd",
+  tagline: "Warehousing and fulfilment, run properly",
+  phone: "+91 22 6100 4400",
+  supportPhone: "+91 22 6100 4411",
   email: "hello@nkplogistics.in",
-  address: "NKP House, Andheri East, Mumbai 400093, Maharashtra",
-};
+  salesEmail: "sales@nkplogistics.in",
+  supportEmail: "support@nkplogistics.in",
+  gstin: "27AABCN1234K1Z9",
+  cin: "U63030MH2021PTC356712",
+  hq: "NKP House, Plot 14, MIDC Bhiwandi, Thane 421302, Maharashtra",
+} as const;
+
+/** Rolling advisory ticker under the navbar — modelled on the real thing. */
+export const ALERTS = [
+  "Beware of phishing SMS claiming a failed delivery attempt and linking to payment pages",
+  "NKP will never ask for an OTP, UPI PIN or card details to release a shipment",
+  "Raise support requests only through this website — we do not operate WhatsApp support numbers",
+  "Invoices are sent only from billing@nkplogistics.in with a signed PDF attached",
+] as const;
 
 export const STATS = [
-  { value: "1.2M+", label: "Shipments delivered" },
-  { value: "450+", label: "Businesses served" },
-  { value: "96.4%", label: "On-time delivery" },
-  { value: "220+", label: "Cities covered" },
-];
+  { value: "7.4 Mn+", label: "Sq ft of warehousing under management" },
+  { value: "42", label: "Fulfilment centres across 14 states" },
+  { value: "19,100+", label: "Serviceable delivery pin codes" },
+  { value: "1,850+", label: "Brands fulfilled every month" },
+  { value: "99.4%", label: "Inventory accuracy at cycle count" },
+] as const;
 
-export const HOW_IT_WORKS = [
+/** Who we build for — the three-up on the dark band. */
+export const SOLUTIONS = [
   {
-    title: "AI Route Optimization",
-    text: "Every dispatch is planned by algorithms that weigh distance, capacity and deadlines.",
+    slug: "d2c",
+    title: "D2C Brands",
+    blurb:
+      "Same-day dispatch on orders placed before the cut-off, inventory split across regional " +
+      "fulfilment centres, and a returns desk that grades and restocks instead of writing off.",
   },
   {
-    title: "Real-Time Tracking",
-    text: "Live location and status for every shipment — for you and your customers.",
+    slug: "b2b",
+    title: "B2B & Retail Distribution",
+    blurb:
+      "Factory-to-retailer distribution with appointment-based dispatch, MRP labelling, case " +
+      "picking and the paperwork modern trade actually demands — GRN, e-way bill, ASN.",
   },
   {
-    title: "Predictive Insights",
-    text: "Delay and risk flags raised before they become missed deliveries.",
+    slug: "marketplace",
+    title: "Marketplace Sellers",
+    blurb:
+      "Stock held close to demand and shipped under each marketplace's own SLA, with listing-level " +
+      "inventory sync so you are never overselling a SKU you cannot fulfil.",
   },
-  {
-    title: "Smart Analytics",
-    text: "Lane-level performance and spend visibility in one dashboard.",
-  },
-];
+] as const;
 
-export const SERVICES = [
+/**
+ * Capabilities inside the fulfilment centre. This is deliberately a breakdown
+ * of warehousing rather than a menu of transport services — warehousing is the
+ * only thing NKP operates directly.
+ */
+export const CAPABILITIES = [
   {
-    slug: "b2b-transportation",
-    title: "B2B Transportation",
-    blurb: "Full-truckload, part-load and express freight across 220+ Indian cities.",
-    features: ["FTL & LTL freight", "Dedicated fleet options", "Express delivery", "Pan-India lane network"],
+    slug: "multi-client-warehousing",
+    title: "Multi-client Warehousing",
+    image: "/media/fc-stock-red-racking.jpg",
+    blurb:
+      "Dedicated or shared racking across 42 fulfilment centres, billed on space actually " +
+      "occupied so you are not paying for a peak-season footprint in February.",
   },
   {
-    slug: "warehousing",
-    title: "Warehousing Solutions",
-    blurb: "Storage and fulfilment hubs with live inventory visibility.",
-    features: ["Storage & inventory management", "Cross-docking", "Cold storage", "Value-added services"],
+    slug: "pick-pack",
+    title: "Pick, Pack & Label",
+    image: "/media/ops-dispatch-van.jpg",
+    blurb:
+      "Scan-verified picking with carrier-compliant labelling and branded packaging, cut off " +
+      "at 6pm for same-day handover to the delivery partner.",
   },
   {
-    slug: "last-mile-delivery",
-    title: "Last-Mile Delivery",
-    blurb: "Reliable final-leg delivery to stores, dealers and doorsteps.",
-    features: ["Retail distribution", "Dealer & store delivery", "E-commerce fulfilment", "POD capture"],
+    slug: "inventory",
+    title: "Inventory Management",
+    image: "/media/ops-picker.jpg",
+    blurb:
+      "Batch, expiry and serial tracking with perpetual cycle counts, reconciled nightly " +
+      "against your storefront so system stock matches shelf stock.",
   },
   {
-    slug: "reverse-logistics",
-    title: "Reverse Logistics",
-    blurb: "Returns handled as carefully as forward shipments.",
-    features: ["Returns management", "Damage handling", "Replacement logistics", "Recycling & disposal"],
+    slug: "returns",
+    title: "Returns & Reverse Logistics",
+    image: "/media/ops-pallets.jpg",
+    blurb:
+      "Returns received, graded, refurbished where viable and put back on the shelf — with " +
+      "photographic evidence on every rejection.",
   },
   {
-    slug: "contract-logistics",
-    title: "Contract Logistics",
-    blurb: "Dedicated trucks, drivers and operations run under your brand.",
-    features: ["Dedicated trucks & drivers", "Embedded operations", "SLA-backed performance", "Custom reporting"],
+    slug: "vas",
+    title: "Value-added Services",
+    image: "/media/ops-forklift.jpg",
+    blurb:
+      "Kitting, bundling, combo packs, MRP re-labelling and quality inspection handled on " +
+      "the floor instead of at a separate vendor.",
   },
   {
-    slug: "supply-chain",
-    title: "Supply Chain Management",
-    blurb: "End-to-end planning across inventory, transport and warehousing.",
-    features: ["Planning & forecasting", "Inventory management", "Transportation management", "Warehouse management"],
+    slug: "distribution",
+    title: "Outbound Distribution",
+    image: "/media/line-haul-truck.jpg",
+    blurb:
+      "Consolidated dispatch to your own stores, distributors and marketplace hubs through " +
+      "vetted line-haul partners, tracked end to end from our dock.",
   },
-];
+] as const;
 
-export const INDUSTRIES = [
-  { slug: "manufacturers", title: "Manufacturers", blurb: "Inbound raw material and outbound finished-goods lanes, synchronized with production schedules." },
-  { slug: "distributors", title: "Distributors", blurb: "High-frequency multi-drop distribution with route-optimized fleets." },
-  { slug: "retail-chains", title: "Retail Chains", blurb: "Store replenishment with fixed delivery windows and POD compliance." },
-  { slug: "wholesalers", title: "Wholesalers", blurb: "Bulk freight at negotiated lane rates with consolidated invoicing." },
-  { slug: "smes", title: "SMEs", blurb: "Enterprise-grade logistics without enterprise-scale volumes or contracts." },
-  { slug: "import-export", title: "Import / Export", blurb: "Port-to-door movements with documentation support end to end." },
-];
+/** The four-up on the warehousing page. */
+export const FULFILMENT_STEPS = [
+  {
+    title: "Inbound & putaway",
+    body:
+      "Vehicles are booked into a dock slot, unloaded against the ASN and counted before the " +
+      "gate pass is signed. Short-shipped or damaged cartons are photographed and raised as a " +
+      "discrepancy the same day, not at month end.",
+  },
+  {
+    title: "Storage & inventory control",
+    body:
+      "Every SKU gets a location, a batch and an expiry where relevant. Perpetual cycle counting " +
+      "means accuracy is measured continuously rather than discovered during an annual stock take.",
+  },
+  {
+    title: "Order fulfilment",
+    body:
+      "Orders drop from your storefront or ERP into the warehouse management system, are wave-picked " +
+      "by zone, scan-verified at packing and manifested to the carrier before cut-off.",
+  },
+  {
+    title: "Dispatch & reconciliation",
+    body:
+      "Manifests hand over to the delivery partner with a signed handover sheet. Every consignment " +
+      "reconciles back against dispatch, delivery and return, so nothing quietly disappears.",
+  },
+] as const;
 
-export const AI_FEATURES = [
-  { title: "AI Route Optimization", text: "Trucks spend fewer kilometres empty because every dispatch plan is solved, not guessed." },
-  { title: "AI ETA Prediction", text: "Delivery windows your customers can plan around, updated as trips progress." },
-  { title: "AI Delay Prediction", text: "Fewer late deliveries because we flag risk before the truck leaves." },
-  { title: "AI Fraud Detection", text: "Suspicious bookings and claims caught earlier than any manual review." },
-  { title: "AI Demand Forecasting", text: "Capacity positioned where next week's volume will actually be." },
-  { title: "AI Operations Copilot", text: "Ask questions about your logistics in plain language, get answers with data." },
-];
-
-export const FAQS = [
+/** The 2×2 advantage grid on the warehousing page. */
+export const ADVANTAGES = [
   {
-    category: "Booking",
-    items: [
-      { q: "How do I book a shipment?", a: "Request a quote via the Contact page — once your account is active you can book directly from the customer portal in under a minute." },
-      { q: "What shipment types do you support?", a: "Full-truckload (FTL), part-load (LTL), express, and last-mile distribution across 220+ cities." },
-      { q: "Can I schedule pickups in advance?", a: "Yes — pickups can be scheduled for any future date with preferred time windows." },
-    ],
+    title: "Multi-client fulfilment centres with 7.4 Mn+ sq ft of racking",
+    body: "Scale up for a festive peak and back down afterwards without renegotiating a lease.",
   },
   {
-    category: "Tracking",
-    items: [
-      { q: "How do I track my shipment?", a: "Enter your tracking ID (e.g. NKP2026A1B2) on the Track page. No login needed." },
-      { q: "How current is tracking data?", a: "Status events update in near real time as drivers progress through the route." },
-      { q: "Can my customers track shipments too?", a: "Yes — the public tracking link can be shared with anyone; it shows status without exposing contact details." },
-    ],
+    title: "One warehouse management system across every location",
+    body: "The same stock view, the same reports and the same API whether you use one FC or nine.",
   },
   {
-    category: "Pricing",
-    items: [
-      { q: "How is pricing calculated?", a: "By lane distance, weight, shipment type and urgency. Our AI quote engine gives an indicative range instantly; final pricing is confirmed by our team." },
-      { q: "Are there volume discounts?", a: "Yes — contracted lanes and committed monthly volumes are priced lower than spot bookings." },
-    ],
+    title: "Billing you can actually audit",
+    body: "Storage, handling and value-added work itemised per line with HSN/SAC on a GST invoice.",
   },
   {
-    category: "Returns",
-    items: [
-      { q: "Do you handle returns?", a: "Yes — reverse logistics including returns, damage handling, replacements and disposal." },
-    ],
+    title: "Inventory visibility down to the batch",
+    body: "Live stock, ageing, near-expiry and reserved quantities, reconciled nightly to your channels.",
   },
-  {
-    category: "Account",
-    items: [
-      { q: "How do I get an account?", a: "Submit the Get a Quote form — our team converts qualified leads to portal accounts within one business day." },
-      { q: "Can multiple team members use one account?", a: "Yes — customer accounts support team members with role-based access." },
-    ],
-  },
-];
-
-export const JOBS = [
-  { title: "Senior Operations Manager", dept: "Operations", location: "Mumbai", type: "Full-time" },
-  { title: "Fleet Supervisor", dept: "Operations", location: "Delhi NCR", type: "Full-time" },
-  { title: "Full-Stack Engineer", dept: "Technology", location: "Bengaluru / Remote", type: "Full-time" },
-  { title: "ML Engineer — Forecasting", dept: "Technology", location: "Bengaluru / Remote", type: "Full-time" },
-  { title: "Enterprise Sales Manager", dept: "Sales", location: "Mumbai", type: "Full-time" },
-  { title: "Warehouse Shift Lead", dept: "Warehousing", location: "Bhiwandi", type: "Full-time" },
-];
-
-export const POSTS = [
-  {
-    slug: "ai-route-optimization-explained",
-    title: "How AI route optimization actually cuts freight costs",
-    category: "Technology",
-    date: "2026-06-28",
-    excerpt: "Vehicle routing is a solved mathematical problem — most fleets just don't use the solution. Here's what changes when you do.",
-    body: "Vehicle routing is one of the oldest problems in operations research, and one of the most expensive to ignore. When dispatch decisions are made by phone calls and intuition, trucks run under-filled, routes overlap, and urgent shipments wait for the wrong vehicle.\n\nAt NKP we treat every dispatch batch as a solvable problem: pending shipments, vehicle capacities and driver hours go in; an assignment plan comes out. The result is measured, not promised — fewer empty kilometres per lane, higher fill rates, and delivery windows that hold.\n\nThe same engine re-plans when reality changes: a breakdown, a cancelled pickup, a priority order. That's the difference between software that reports problems and software that absorbs them.",
-  },
-  {
-    slug: "dpdp-act-logistics-data",
-    title: "What the DPDP Act means for your shipment data",
-    category: "Compliance",
-    date: "2026-06-10",
-    excerpt: "India's data protection law applies to logistics more than most shippers realize. A practical guide.",
-    body: "The Digital Personal Data Protection Act 2023 covers consignee names, phone numbers and addresses — data that flows through every shipping label in India.\n\nFor shippers, the practical questions are: who can see delivery contact details, how long are they retained, and can they be deleted on request? We built NKP's platform around those answers: driver-to-customer calls run through masked numbers, public tracking pages never expose contact details, and PII retention follows a published policy with right-to-delete support.\n\nIf your current logistics partner emails spreadsheets of consignee phone numbers, that's a compliance gap you're carrying.",
-  },
-  {
-    slug: "reducing-failed-deliveries",
-    title: "Failed deliveries are a data problem, not a driver problem",
-    category: "Operations",
-    date: "2026-05-22",
-    excerpt: "Most failed delivery attempts are predictable hours in advance. The signals are already in your data.",
-    body: "A failed delivery costs twice: the wasted attempt and the re-attempt. Analysis across our network shows most failures cluster around predictable signals — consignee unreachable on past deliveries, address mismatches, delivery windows that conflict with business hours.\n\nOur delay and risk models score every in-transit shipment against these signals and surface the risky ones to operations before the truck arrives. A two-minute proactive call converts most would-be failures into successful first attempts.\n\nOn-time percentage is a lagging indicator. Risk flags are a leading one.",
-  },
-];
+] as const;
 
 export const CASE_STUDIES = [
   {
-    slug: "electronics-distributor",
-    client: "National electronics distributor",
-    industry: "Distribution",
-    challenge: "Store replenishment across 340 outlets was running at 82% on-time, with no visibility between dispatch and delivery.",
-    solution: "Dedicated contract fleet on core lanes, AI route planning for multi-drop runs, and live tracking shared directly with store managers.",
-    results: [
-      { metric: "On-time delivery", value: "82% → 97%" },
-      { metric: "Freight cost per drop", value: "−18%" },
-      { metric: "WISMO support calls", value: "−60%" },
+    title: "A skincare brand cuts order-to-ship from 38 hours to under 6",
+    image: "/media/ops-picker.jpg",
+    body:
+      "Before moving in, the brand was fulfilling from a rented godown with a spreadsheet for stock. " +
+      "Splitting inventory across our Bhiwandi and Hoskote centres put 78% of their orders within a " +
+      "next-day delivery radius, and scan-verified picking took mis-ships from 1.8% to 0.2%.",
+    metrics: [
+      { value: "38h → 6h", label: "Order-to-ship" },
+      { value: "0.2%", label: "Mis-ship rate" },
+      { value: "78%", label: "Orders in next-day radius" },
     ],
   },
   {
-    slug: "pharma-manufacturer",
-    client: "Pharmaceutical manufacturer",
-    industry: "Manufacturing",
-    challenge: "Temperature-sensitive shipments needed audit-ready handling and proactive delay management on long lanes.",
-    solution: "Cold-chain capable vehicles, AI delay prediction with automatic escalation, and POD documents captured digitally with timestamps.",
-    results: [
-      { metric: "Spoilage incidents", value: "0 in 12 months" },
-      { metric: "Delay escalations caught pre-breach", value: "94%" },
-      { metric: "Audit prep time", value: "days → hours" },
+    title: "A kitchenware exporter consolidates nine godowns into three FCs",
+    image: "/media/fc-racking-pallets.jpg",
+    body:
+      "Nine regional godowns meant nine stock ledgers and no single view of inventory. Consolidating " +
+      "into three multi-client fulfilment centres cut fixed storage cost by 31% and, for the first " +
+      "time, produced a reconciled national stock position each morning.",
+    metrics: [
+      { value: "9 → 3", label: "Storage locations" },
+      { value: "31%", label: "Lower fixed storage cost" },
+      { value: "99.6%", label: "Inventory accuracy" },
+    ],
+  },
+] as const;
+
+/** Support centre taxonomy — mirrors how a real support desk is organised. */
+export const SUPPORT_CATEGORIES = [
+  {
+    slug: "shipments",
+    title: "Shipments",
+    topics: [
+      {
+        q: "How do I track my consignment?",
+        a: "Enter your AWB, order ID or LRN on the Track page. Tracking goes live once the consignment has been manifested and handed to the delivery partner, which is usually within a few hours of dispatch from our fulfilment centre.",
+      },
+      {
+        q: "My tracking has not updated in two days. What does that mean?",
+        a: "Scans update when a consignment changes hands or location, so a stationary status usually means it is in line-haul between hubs rather than lost. If there has been no scan for more than 48 hours, raise a query with the AWB and we will trace it with the carrier.",
+      },
+      {
+        q: "Why is my delivery delayed?",
+        a: "The common causes are weather or road closures on the lane, an incomplete or unreachable delivery address, and seasonal volume peaks. Where we can see a specific cause on your consignment, it is shown on the tracking timeline rather than hidden behind a generic status.",
+      },
+      {
+        q: "Can I change the delivery address after dispatch?",
+        a: "Within the same city, usually yes, if the consignment has not gone out for delivery. Raise a query with the AWB and the corrected address. A change to a different city means the consignment has to come back to the fulfilment centre first.",
+      },
     ],
   },
   {
-    slug: "d2c-brand",
-    client: "D2C home & kitchen brand",
-    industry: "E-commerce",
-    challenge: "Returns were taking 3+ weeks to re-enter sellable inventory, locking up working capital.",
-    solution: "Reverse logistics program with in-warehouse grading, refurbishment routing and weekly consolidated returns lanes.",
-    results: [
-      { metric: "Return-to-shelf time", value: "21 days → 6 days" },
-      { metric: "Recovered inventory value", value: "+₹1.8 Cr/yr" },
-      { metric: "Return freight cost", value: "−31%" },
+    slug: "inventory",
+    title: "Inventory & Fulfilment",
+    topics: [
+      {
+        q: "How quickly is inbound stock available to sell?",
+        a: "Stock is counted, put away and live in the system within 24 hours of unloading for standard cartons. Items needing inspection, kitting or re-labelling take longer, and that turnaround is agreed in your service schedule.",
+      },
+      {
+        q: "What is the dispatch cut-off?",
+        a: "Orders received before 6:00 pm at the fulfilment centre are picked, packed and handed to the delivery partner the same day. Orders after cut-off go out on the next working day's first manifest.",
+      },
+      {
+        q: "How is inventory accuracy maintained?",
+        a: "Through perpetual cycle counting rather than an annual stock take — a rolling subset of locations is counted every day, so discrepancies surface within days instead of at year end. Current accuracy across the network is 99.4%.",
+      },
+      {
+        q: "Can I hold stock in more than one fulfilment centre?",
+        a: "Yes, and most brands past a certain volume should. Splitting inventory across regional centres shortens the delivery radius and lowers freight cost. We model the split against your historical order distribution before you commit.",
+      },
     ],
   },
-];
+  {
+    slug: "billing",
+    title: "Billing & Payments",
+    topics: [
+      {
+        q: "How is warehousing billed?",
+        a: "Monthly in arrears, itemised into storage (on space actually occupied), handling (per order or per pallet) and any value-added work. Every line carries its HSN/SAC code so your finance team can claim input credit.",
+      },
+      {
+        q: "My GSTIN is missing or wrong on an invoice.",
+        a: "Raise a billing query with the invoice number and the correct GSTIN. An issued invoice cannot be edited in place — we cancel it and issue a corrected one against a credit note, which is what GST rules require.",
+      },
+      {
+        q: "What payment methods do you accept?",
+        a: "Invoices can be paid online by UPI, net banking, debit or credit card through the payment link on the invoice, or by NEFT/RTGS to the account printed on it. Online payments reconcile against the invoice automatically.",
+      },
+      {
+        q: "When is payment due?",
+        a: "Fifteen days from the invoice date unless your contract says otherwise. The due date is printed on every invoice and shown on the invoice list in your dashboard.",
+      },
+    ],
+  },
+  {
+    slug: "account",
+    title: "Account & Onboarding",
+    topics: [
+      {
+        q: "How long does onboarding take?",
+        a: "Typically two to three weeks from signed agreement to first dispatch: one week for the commercial and space allocation, one for systems integration and master data, and a few days of parallel running before cutover.",
+      },
+      {
+        q: "Do you integrate with my storefront or ERP?",
+        a: "Yes. Shopify, WooCommerce and the major Indian marketplaces have prebuilt connectors; anything else integrates over our REST API. Orders, inventory and dispatch status sync both ways.",
+      },
+      {
+        q: "What are the minimum volumes?",
+        a: "Shared racking starts to make sense from roughly 1,500 orders a month or half a pallet position of steady stock. Below that a dedicated fulfilment partner is usually more expensive than fulfilling in-house, and we will tell you so.",
+      },
+      {
+        q: "Who do I contact about an existing account?",
+        a: "Your named account manager, or raise a query here and it routes to the right desk. Include your company name and, if relevant, the AWB or invoice number.",
+      },
+    ],
+  },
+] as const;
+
+export const SUPPORT_QUERY_CATEGORIES = [
+  "Shipment status",
+  "Delivery issue",
+  "Inventory discrepancy",
+  "Damaged or short receipt",
+  "Billing or invoice",
+  "New business enquiry",
+  "Integration or API",
+  "Something else",
+] as const;
+
+export const OFFICES = [
+  {
+    city: "Mumbai",
+    role: "Head office",
+    address: "NKP House, Plot 14, MIDC Bhiwandi, Thane 421302, Maharashtra",
+    phone: "+91 22 6100 4400",
+  },
+  {
+    city: "Bengaluru",
+    role: "South regional hub",
+    address: "Survey 44/2, Hoskote Industrial Area, Bengaluru 562114, Karnataka",
+    phone: "+91 80 4718 2200",
+  },
+  {
+    city: "Delhi NCR",
+    role: "North regional hub",
+    address: "Sector 18, Udyog Vihar, Gurugram 122016, Haryana",
+    phone: "+91 124 471 9900",
+  },
+] as const;
+
+/** Footer navigation. */
+export const FOOTER_COLUMNS = [
+  {
+    heading: "Services",
+    links: [
+      { label: "Warehousing", href: "/services/warehousing" },
+      { label: "Fulfilment", href: "/services/warehousing#fulfilment" },
+      { label: "Returns management", href: "/services/warehousing#fulfilment" },
+      { label: "Value-added services", href: "/services/warehousing#advantage" },
+    ],
+  },
+  {
+    heading: "Solutions",
+    links: [
+      { label: "D2C brands", href: "/services/warehousing#solutions" },
+      { label: "B2B distribution", href: "/services/warehousing#solutions" },
+      { label: "Marketplace sellers", href: "/services/warehousing#solutions" },
+    ],
+  },
+  {
+    heading: "Platform",
+    links: [
+      { label: "Track a consignment", href: "/track" },
+      { label: "AI Control Tower", href: "/ai" },
+      { label: "Customer dashboard", href: "/dashboard" },
+      { label: "Sign in", href: "/login" },
+    ],
+  },
+  {
+    heading: "Get in touch",
+    links: [
+      { label: "Contact us", href: "/contact" },
+      { label: "Support centre", href: "/support" },
+      { label: "Raise a query", href: "/support#raise" },
+      { label: "Request a quote", href: "/contact" },
+    ],
+  },
+  {
+    heading: "Policies",
+    links: [
+      { label: "Terms & conditions", href: "/terms" },
+      { label: "Privacy policy", href: "/privacy" },
+      { label: "Fraud disclaimer", href: "/support#fraud" },
+    ],
+  },
+] as const;

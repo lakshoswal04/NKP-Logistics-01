@@ -99,7 +99,9 @@ def _events_for(shipment: Shipment, origin: str, dest: str, hours: int) -> list[
             ShipmentEvent(
                 status=status,
                 description=EVENT_COPY[status],
-                location=origin.title() if i == 0 else (dest.title() if t == 1 else "En route"),
+                # Booking and pickup both happen at the origin facility; only the
+                # legs in between are genuinely "en route".
+                location=origin.title() if i <= 1 else (dest.title() if t == 1 else "En route"),
                 lat=round(lat, 4),
                 lng=round(lng, 4),
                 occurred_at=start + timedelta(hours=step * (i + 1)),

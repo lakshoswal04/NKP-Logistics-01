@@ -100,3 +100,42 @@ export async function submitLead(payload: LeadPayload): Promise<LeadResult> {
   });
   return handle<LeadResult>(res);
 }
+
+// --- Support ---------------------------------------------------------------
+
+export interface TicketPayload {
+  category: string;
+  subject: string;
+  body: string;
+  full_name?: string;
+  email: string;
+  phone?: string;
+  tracking_id?: string;
+}
+
+export interface TicketResult {
+  id: number;
+  ticket_id: string;
+  category: string;
+  subject: string;
+  status: string;
+  created_at: string;
+  ai_summary: string | null;
+  ai_suggested_reply: string | null;
+}
+
+export async function createTicket(payload: TicketPayload): Promise<TicketResult> {
+  const res = await fetch(`${API_URL}/api/v1/support/tickets`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  return handle<TicketResult>(res);
+}
+
+export async function fetchTicket(ticketId: string): Promise<TicketResult> {
+  const res = await fetch(
+    `${API_URL}/api/v1/support/tickets/${encodeURIComponent(ticketId)}`,
+  );
+  return handle<TicketResult>(res);
+}
