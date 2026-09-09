@@ -3,30 +3,43 @@
 /* ---------------------------------------------------------------------------
    NKP Logistics design tokens
 
-   Light-first, red on near-black. The page alternates full-bleed bands —
-   white, mist, ink — which is what gives a logistics site its editorial,
-   operational feel rather than the uniform dark surface of a SaaS template.
+   Structure: a cinematic near-black hero, a light content body, a dark footer.
+   The bands do the work — `Section` switches ground, and everything else reads
+   off these tokens. Neutrals are sampled from the reference rather than picked
+   by eye, which is why they carry a faint green cast rather than being pure
+   greys.
    --------------------------------------------------------------------------- */
 
 @theme {
-  /* Neutrals */
-  --color-ink: #101014;
-  --color-ink-2: #4a4a55;
-  --color-ink-3: #7a7a88;
+  /* Grounds */
+  --color-void: #050706;        /* hero + footer ground, near-black */
+  --color-void-2: #101413;      /* raised panel on the dark ground */
+  --color-ink: #131313;         /* primary text on light, and the dark band */
+  --color-ink-2: #4a4a52;       /* body copy */
+  --color-ink-3: #71717b;       /* muted / meta — 4.83:1 on paper (AA) */
   --color-paper: #ffffff;
-  --color-mist: #f4f5f7;
-  --color-line: rgb(16 16 20 / 0.10);
-  --color-line-strong: rgb(16 16 20 / 0.18);
+  --color-mist: #edeff2;        /* soft panel + alternating band */
 
-  /* On dark bands */
-  --color-ink-inverse: #f7f7f9;
-  --color-ink-inverse-2: #a9a9b6;
+  /* Hairlines */
+  --color-line: rgb(19 19 19 / 0.10);
+  --color-line-strong: rgb(19 19 19 / 0.18);
+
+  /* On-dark surfaces. These were previously declared and never used — every
+     component hardcoded text-white/70 and border-white/10 instead. */
+  --color-ink-inverse: #ffffff;
+  --color-ink-inverse-2: rgb(255 255 255 / 0.72);
+  --color-ink-inverse-3: rgb(255 255 255 / 0.52);
   --color-line-inverse: rgb(255 255 255 / 0.14);
+  --color-line-inverse-strong: rgb(255 255 255 / 0.28);
 
   /* Brand */
   --color-brand: #e1252b;
   --color-brand-hover: #b81419;
   --color-brand-soft: #fdeced;
+  /* The brand red is only 4.33:1 on the near-black ground, which fails AA for
+     the small uppercase eyebrows that sit on it. This lifted tint reaches
+     4.92:1 and is used wherever the accent appears on a dark band. */
+  --color-brand-on-dark: #e83a40;
 
   /* Status */
   --color-success: #137a3f;
@@ -42,63 +55,94 @@
   --font-sans: var(--font-general), ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-display: var(--font-clash), var(--font-general), ui-sans-serif, sans-serif;
 
-  /* Rhythm — section padding is used often enough to be a token */
-  --spacing-band: 5.5rem;
-  --spacing-band-lg: 7.5rem;
+  /* Radius scale. The previous system was deliberately square (2–3px); the new
+     direction is generously rounded, so this is a real scale rather than the
+     three ad-hoc arbitrary values it replaces. */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-pill: 999px;
+
+  /* Vertical rhythm */
+  --spacing-band: 6rem;
+  --spacing-band-lg: 8.5rem;
 }
 
 /* ---------------------------------------------------------------------------
    Signature devices
    --------------------------------------------------------------------------- */
 
-/* The short red rule beneath a section heading. The most repeated device in
-   the layout — it is what ties the bands together. */
-@utility rule-red {
-  &::after {
-    content: "";
-    display: block;
-    width: 4.5rem;
-    height: 3px;
-    margin-top: 1.25rem;
-    background: var(--color-brand);
-  }
+/* Cinematic hero scrim. Weighted to the BOTTOM so stats overlaid on the lower
+   edge stay legible, with a lighter top wash so the transparent navbar reads.
+   The previous scrim was weighted left, for a side-set headline. */
+@utility cine-scrim {
+  background:
+    linear-gradient(180deg, rgb(5 7 6 / 0.72) 0%, rgb(5 7 6 / 0.34) 26%, rgb(5 7 6 / 0.58) 62%, rgb(5 7 6 / 0.94) 100%),
+    linear-gradient(90deg, rgb(5 7 6 / 0.94) 0%, rgb(5 7 6 / 0.74) 34%, rgb(5 7 6 / 0.40) 64%, rgb(5 7 6 / 0.24) 100%);
 }
 
-/* Small solid red square used as an inline separator between service chips. */
+/* Lighter variant for interior page heroes, which carry less text. */
+@utility cine-scrim-soft {
+  background:
+    linear-gradient(180deg, rgb(5 7 6 / 0.66) 0%, rgb(5 7 6 / 0.30) 34%, rgb(5 7 6 / 0.78) 100%),
+    linear-gradient(90deg, rgb(5 7 6 / 0.86) 0%, rgb(5 7 6 / 0.45) 52%, rgb(5 7 6 / 0.18) 88%);
+}
+
+/* Caption plate at the foot of a photo card. */
+@utility photo-caption {
+  background: linear-gradient(180deg, transparent 0%, rgb(5 7 6 / 0.88) 100%);
+}
+
+/* The angled corner on a full-bleed accent band. */
+@utility corner-cut {
+  clip-path: polygon(7rem 0, 100% 0, 100% 100%, 0 100%, 0 7rem);
+}
+
+@utility corner-cut-sm {
+  clip-path: polygon(3rem 0, 100% 0, 100% 100%, 0 100%, 0 3rem);
+}
+
+/* Navbar once it has left the hero. */
+@utility glass-nav {
+  background: rgb(5 7 6 / 0.82);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid var(--color-line-inverse);
+}
+
+/* Uppercase micro-label. Colour is deliberately NOT set here: it was, and two
+   of the fifteen call sites already had to override it. */
+@utility eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+
+/* Small solid accent square used between inline chips. */
 @utility chip-sep {
   display: inline-block;
-  width: 0.5rem;
-  height: 0.5rem;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 1px;
   background: var(--color-brand);
   vertical-align: middle;
 }
 
-/* Uppercase micro-label above a heading. */
-@utility eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  color: var(--color-ink-3);
-}
-
-/* Scrim over a hero photograph. Dark at the left where the headline sits,
-   clearing to the right so the image is still legible. Two stops rather than
-   a flat overlay, so the photo never looks like it is behind grey glass. */
-@utility hero-scrim {
-  background:
-    linear-gradient(90deg, rgb(10 10 12 / 0.92) 0%, rgb(10 10 12 / 0.72) 38%, rgb(10 10 12 / 0.18) 78%, rgb(10 10 12 / 0.05) 100%),
-    linear-gradient(180deg, rgb(10 10 12 / 0.45) 0%, transparent 30%);
-}
-
-/* Softer scrim for interior page heroes, which carry less text. */
-@utility hero-scrim-soft {
-  background: linear-gradient(90deg, rgb(10 10 12 / 0.85) 0%, rgb(10 10 12 / 0.55) 45%, rgb(10 10 12 / 0.10) 90%);
-}
-
-/* Caption plate anchored to the bottom of a photo card. */
-@utility photo-caption {
-  background: linear-gradient(180deg, transparent 0%, rgb(10 10 12 / 0.85) 100%);
+/* Optional short rule under a heading — no longer the default device. */
+@utility rule-red {
+  &::after {
+    content: "";
+    display: block;
+    width: 3.5rem;
+    height: 3px;
+    border-radius: 2px;
+    margin-top: 1.25rem;
+    background: var(--color-brand);
+  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -119,7 +163,7 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
-  letter-spacing: -0.015em;
+  letter-spacing: -0.03em;
   text-wrap: balance;
 }
 
@@ -130,16 +174,52 @@ p {
 :focus-visible {
   outline: 2px solid var(--color-brand);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
 }
 
 ::selection {
   background: var(--color-brand);
-  color: #fff;
+  color: var(--color-paper);
 }
 
-/* Next 16 no longer overrides scroll-behavior during navigation, so opting in
-   is now explicit — see the data-scroll-behavior attribute on <html>. */
+/* ---------------------------------------------------------------------------
+   Motion
+
+   Every keyframe here is paired with a `motion-reduce:` guard at the call site,
+   in addition to the global block below. Belt and braces: the global block only
+   reaches CSS animation and transition, so anything driven by JS or SMIL has to
+   opt out separately.
+   --------------------------------------------------------------------------- */
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@utility animate-ticker {
+  animation: ticker 46s linear infinite;
+}
+
+/* Slow drift across a hero photograph. Deliberately long and small — a fast or
+   large zoom reads as a screensaver rather than as depth. */
+@keyframes ken-burns {
+  from { transform: scale(1) translate3d(0, 0, 0); }
+  to   { transform: scale(1.07) translate3d(-1.2%, -1%, 0); }
+}
+
+@utility animate-ken-burns {
+  animation: ken-burns 26s ease-out both;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@utility animate-fade-up {
+  animation: fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -149,24 +229,4 @@ p {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-/* Marquee for the alert ticker. Duplicated content inside the track means the
-   loop is seamless at exactly -50%. */
-@keyframes ticker {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
-@utility animate-ticker {
-  animation: ticker 42s linear infinite;
-}
-
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: none; }
-}
-
-@utility animate-fade-up {
-  animation: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }

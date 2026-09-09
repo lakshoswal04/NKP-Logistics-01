@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useSyncExternalStore } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 
 import { Logo } from "@/components/site/Logo";
 import { getAccessToken, logout } from "@/lib/auth";
@@ -26,14 +26,31 @@ export function Navbar() {
   // server render has no token, and reading it directly would hydrate mismatched.
   const token = useSyncExternalStore(noopSubscribe, getAccessToken, () => null);
 
+  // The bar is transparent over the hero photograph and picks up a blurred dark
+  // ground once it has scrolled past it. `passive` because the handler never
+  // calls preventDefault, and the browser can then keep scrolling off the main
+  // thread.
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 72);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   // The drawer closes on link click rather than in an effect keyed on pathname:
   // setState inside an effect body triggers a second render pass, and the click
   // is the actual event we care about.
   const close = () => setOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-ink">
-      <nav className="mx-auto flex h-[68px] max-w-[1200px] items-center justify-between px-6">
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter,border-color] duration-300",
+        scrolled || open ? "glass-nav" : "border-b border-transparent bg-transparent",
+      )}
+    >
+      <nav className="mx-auto flex h-[76px] max-w-[1240px] items-center justify-between px-6">
         <Link href="/" aria-label={`${"NKP Logistics"} home`}>
           <Logo />
         </Link>
@@ -48,12 +65,12 @@ export function Navbar() {
                   aria-current={active ? "page" : undefined}
                   className={cn(
                     "relative py-2 text-[14px] font-medium transition-colors",
-                    active ? "text-white" : "text-white/75 hover:text-white",
+                    active ? "text-ink-inverse" : "text-ink-inverse-2 hover:text-ink-inverse",
                   )}
                 >
                   {link.label}
                   {active && (
-                    <span className="absolute inset-x-0 -bottom-0.5 h-0.5 bg-brand" aria-hidden />
+                    <span className="absolute inset-x-0 -bottom-1 h-0.5 rounded-full bg-brand" aria-hidden />
                   )}
                 </Link>
               </li>
@@ -69,21 +86,21 @@ export function Navbar() {
                 logout();
                 window.location.assign("/");
               }}
-              className="text-[14px] font-medium text-white/75 transition-colors hover:text-white"
+              className="text-[14px] font-medium text-ink-inverse-2 transition-colors hover:text-ink-inverse"
             >
               Sign out
             </button>
           ) : (
             <Link
               href="/login"
-              className="text-[14px] font-medium text-white/75 transition-colors hover:text-white"
+              className="text-[14px] font-medium text-ink-inverse-2 transition-colors hover:text-ink-inverse"
             >
               Sign in
             </Link>
           )}
           <Link
             href="/contact"
-            className="rounded-[3px] bg-white px-5 py-2.5 text-[13.5px] font-semibold text-ink transition-colors hover:bg-mist"
+            className="rounded-pill border border-line-inverse-strong px-5 py-2.5 text-[13.5px] font-semibold text-ink-inverse transition-colors hover:border-paper hover:bg-paper hover:text-ink"
           >
             Get a quote
           </Link>
@@ -95,7 +112,7 @@ export function Navbar() {
           aria-expanded={open}
           aria-controls="mobile-nav"
           aria-label={open ? "Close menu" : "Open menu"}
-          className="-mr-2 p-2 text-white lg:hidden"
+          className="-mr-2 p-2 text-ink-inverse lg:hidden"
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
             {open ? (
@@ -108,14 +125,14 @@ export function Navbar() {
       </nav>
 
       {open && (
-        <div id="mobile-nav" className="border-t border-white/10 bg-ink px-6 py-4 lg:hidden">
+        <div id="mobile-nav" className="border-t border-line-inverse bg-void px-6 py-4 lg:hidden">
           <ul className="flex flex-col">
             {LINKS.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
                   onClick={close}
-                  className="block border-b border-white/10 py-3 text-[15px] text-white/85"
+                  className="block border-b border-line-inverse py-3 text-[15px] text-ink-inverse-2"
                 >
                   {link.label}
                 </Link>
@@ -129,12 +146,12 @@ export function Navbar() {
                     logout();
                     window.location.assign("/");
                   }}
-                  className="block w-full py-3 text-left text-[15px] text-white/85"
+                  className="block w-full py-3 text-left text-[15px] text-ink-inverse-2"
                 >
                   Sign out
                 </button>
               ) : (
-                <Link href="/login" onClick={close} className="block py-3 text-[15px] text-white/85">
+                <Link href="/login" onClick={close} className="block py-3 text-[15px] text-ink-inverse-2">
                   Sign in
                 </Link>
               )}
@@ -143,7 +160,7 @@ export function Navbar() {
           <Link
             href="/contact"
             onClick={close}
-            className="mt-3 block rounded-[3px] bg-brand px-5 py-3 text-center text-sm font-semibold text-white"
+            className="mt-3 block rounded-pill bg-brand px-5 py-3 text-center text-sm font-semibold text-paper"
           >
             Get a quote
           </Link>

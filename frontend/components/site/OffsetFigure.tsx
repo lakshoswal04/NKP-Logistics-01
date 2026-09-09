@@ -3,11 +3,11 @@ import Image from "next/image";
 import { cn } from "@/lib/cn";
 
 /**
- * Photograph sitting proud of an offset black plate, with a small red square.
+ * Rounded photo card with a small accent marker.
  *
- * The wrapper carries the padding so the plate can fill the bottom-right and
- * still show past the image on two edges — anchoring the plate behind an image
- * of the same size just hides it entirely.
+ * Previously this sat proud of an offset black plate. That device relied on the
+ * plate contrasting with a white page; with dark bands either side it stopped
+ * reading, so the figure is now a plain rounded card in the reference's style.
  */
 export function OffsetFigure({
   src,
@@ -21,15 +21,20 @@ export function OffsetFigure({
   aspect?: string;
 }) {
   return (
-    <div className={cn("relative lg:pb-7 lg:pr-7", className)}>
+    <div className={cn("group relative", className)}>
+      <div className={cn("relative overflow-hidden rounded-2xl", aspect)}>
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+        />
+      </div>
       <div
-        className="absolute bottom-0 right-0 hidden h-[78%] w-[78%] bg-ink lg:block"
+        className="absolute -bottom-4 -left-4 hidden size-20 rounded-lg bg-brand lg:block"
         aria-hidden
       />
-      <div className={cn("relative overflow-hidden", aspect)}>
-        <Image src={src} alt={alt} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
-      </div>
-      <div className="absolute -top-3 right-3 hidden h-9 w-9 bg-brand lg:block" aria-hidden />
     </div>
   );
 }

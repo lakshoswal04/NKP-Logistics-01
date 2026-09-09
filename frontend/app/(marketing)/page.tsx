@@ -1,13 +1,13 @@
 import Image from "next/image";
 import type { Metadata } from "next";
 
+import { AlertTicker } from "@/components/site/AlertTicker";
 import { CtaBand } from "@/components/site/CtaBand";
 import { HomeHero } from "@/components/site/HomeHero";
 import { OffsetFigure } from "@/components/site/OffsetFigure";
-import { StatBand } from "@/components/site/StatBand";
 import { ArrowLink, Button } from "@/components/ui/Button";
 import { Eyebrow, Section, SectionHeading } from "@/components/ui/Section";
-import { Reveal } from "@/components/ui/Reveal";
+import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { CAPABILITIES, SOLUTIONS } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -22,102 +22,99 @@ export default function HomePage() {
   return (
     <>
       <HomeHero />
-      <StatBand />
+      <AlertTicker />
 
-      {/* Who we build for — dark band */}
-      <Section tone="ink" id="solutions">
-        <SectionHeading lead="Built for the way" strong="Indian commerce actually ships" inverse />
-        <div className="mt-14 grid gap-10 md:grid-cols-3">
-          {SOLUTIONS.map((solution, index) => (
-            <Reveal key={solution.slug} delay={index * 0.06}>
-              <div>
-                <span className="block h-[3px] w-10 bg-brand" aria-hidden />
-                <h3 className="mt-5 font-display text-[21px] font-bold text-white">
-                  {solution.title}
-                </h3>
-                <p className="mt-3 text-[14px] leading-relaxed text-white/70">{solution.blurb}</p>
-                <ArrowLink
-                  href="/services/warehousing#solutions"
-                  tone="inverse"
-                  className="mt-5"
-                >
-                  Know more
-                </ArrowLink>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </Section>
-
-      {/* Capabilities grid — photo cards on mist */}
-      <Section tone="mist">
-        <div className="grid gap-12 lg:grid-cols-[340px_1fr]">
+      {/* Who we build for */}
+      <Section tone="paper" id="solutions">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-20">
           <div>
-            <SectionHeading lead="What happens" strong="inside our fulfilment centres" />
-            <p className="mt-6 max-w-[280px] text-[14px] leading-relaxed text-ink-2">
-              Warehousing is the whole business, not a line item next to nine other services. Every
-              capability below runs on our own floor.
-            </p>
+            <Eyebrow>Who we build for</Eyebrow>
+            <SectionHeading lead="Built for the way" strong="Indian commerce actually ships" />
           </div>
-
-          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            {CAPABILITIES.map((capability, index) => (
-              <Reveal key={capability.slug} delay={index * 0.04}>
-                <article className="flex h-full flex-col bg-white">
-                  <div className="relative aspect-[16/10] overflow-hidden">
-                    <Image
-                      src={capability.image}
-                      alt=""
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                      className="object-cover"
-                    />
-                    <div className="photo-caption absolute inset-x-0 bottom-0 p-4" aria-hidden={false}>
-                      <h3 className="font-display text-[15.5px] font-bold text-white">
-                        {capability.title}
-                      </h3>
-                    </div>
-                  </div>
-                  <div className="flex flex-1 flex-col p-5">
-                    <p className="text-[13.5px] leading-relaxed text-ink-2">{capability.blurb}</p>
-                    <ArrowLink href="/services/warehousing" tone="ink" className="mt-5">
-                      Know more
-                    </ArrowLink>
-                  </div>
-                </article>
-              </Reveal>
+          <RevealGroup className="flex flex-col gap-10 pt-2" gap={0.08}>
+            {SOLUTIONS.map((solution) => (
+              <RevealItem key={solution.slug}>
+                <div className="border-t border-line pt-6">
+                  <h3 className="font-display text-[22px] font-bold text-ink">{solution.title}</h3>
+                  <p className="mt-3 max-w-[520px] text-[14.5px] leading-relaxed text-ink-2">
+                    {solution.blurb}
+                  </p>
+                  <ArrowLink href="/services/warehousing#solutions" tone="ink" className="mt-5">
+                    Know more
+                  </ArrowLink>
+                </div>
+              </RevealItem>
             ))}
-          </div>
+          </RevealGroup>
         </div>
       </Section>
 
-      {/* Split-offset feature — the AI tab */}
+      {/* Capability cards */}
+      <Section tone="mist">
+        <div className="max-w-[640px]">
+          <Eyebrow>Inside the fulfilment centre</Eyebrow>
+          <SectionHeading lead="Warehousing is the whole business," strong="not a line item" />
+          <p className="mt-6 text-[15px] leading-relaxed text-ink-2">
+            Every capability below runs on our own floor, under one warehouse management system.
+          </p>
+        </div>
+
+        <RevealGroup className="mt-14 grid gap-6 sm:grid-cols-2 xl:grid-cols-3" gap={0.05}>
+          {CAPABILITIES.map((capability) => (
+            <RevealItem key={capability.slug} className="h-full">
+              <article className="group flex h-full flex-col overflow-hidden rounded-xl bg-paper">
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <Image
+                    src={capability.image}
+                    alt=""
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                  <div className="photo-caption absolute inset-x-0 bottom-0 p-5">
+                    <h3 className="font-display text-[16px] font-bold text-ink-inverse">
+                      {capability.title}
+                    </h3>
+                  </div>
+                </div>
+                <div className="flex flex-1 flex-col p-6">
+                  <p className="text-[13.5px] leading-relaxed text-ink-2">{capability.blurb}</p>
+                  <ArrowLink href="/services/warehousing" tone="ink" className="mt-5">
+                    Know more
+                  </ArrowLink>
+                </div>
+              </article>
+            </RevealItem>
+          ))}
+        </RevealGroup>
+      </Section>
+
+      {/* AI Control Tower */}
       <Section tone="paper">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
+        <div className="grid items-center gap-14 lg:grid-cols-2">
           <Reveal>
             <div>
               <Eyebrow>AI Control Tower</Eyebrow>
-              <SectionHeading lead="Ask your warehouse" strong="a question, get an answer" />
-              <p className="mt-6 max-w-[480px] text-[15px] leading-relaxed text-ink-2">
+              <SectionHeading lead="Ask your warehouse a question," strong="get a real answer" />
+              <p className="mt-6 max-w-[500px] text-[15px] leading-relaxed text-ink-2">
                 Not a chatbot bolted onto a marketing site. The control tower reads your live stock,
-                invoices and consignments, extracts line items from a supplier PDF, scores a messy
-                delivery address before it becomes an RTO, and drafts the customer email when a
-                consignment slips.
+                invoices and consignments, scores a messy delivery address before it becomes an RTO,
+                and drafts the customer email when a consignment slips.
               </p>
-              <ul className="mt-7 flex flex-col gap-3">
+              <ul className="mt-8 flex flex-col gap-3.5">
                 {[
                   "Ops copilot with real access to your data",
-                  "Document intake — PO or packing list to draft invoice",
                   "Address intelligence and RTO risk scoring",
                   "Fulfilment-centre placement modelling",
+                  "Support triage grounded in the knowledge base",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3 text-[14px] text-ink-2">
-                    <span className="mt-[7px] h-1.5 w-1.5 shrink-0 bg-brand" aria-hidden />
+                    <span className="mt-[7px] size-1.5 shrink-0 rounded-full bg-brand" aria-hidden />
                     {item}
                   </li>
                 ))}
               </ul>
-              <Button href="/ai" className="mt-8" withArrow>
+              <Button href="/ai" variant="dark" size="lg" className="mt-9" withBadge>
                 Open the control tower
               </Button>
             </div>
@@ -130,6 +127,24 @@ export default function HomePage() {
             />
           </Reveal>
         </div>
+      </Section>
+
+      {/* Angled accent band */}
+      <Section tone="brand" className="corner-cut" innerClassName="text-center">
+        <Reveal>
+          <p className="eyebrow mb-6 text-paper/80">Why it matters</p>
+          <h2 className="mx-auto max-w-[860px] font-display text-[32px] font-bold leading-[1.06] tracking-[-0.03em] text-paper sm:text-[42px] lg:text-[50px]">
+            Every day stock sits in the wrong city is a delivery promise you cannot make.
+          </h2>
+          <p className="mx-auto mt-7 max-w-[620px] text-[15.5px] leading-relaxed text-paper/90">
+            Splitting inventory across regional fulfilment centres shortens the delivery radius,
+            lowers freight cost, and turns next-day from a premium into the default. We model the
+            split against your real order distribution before you commit to anything.
+          </p>
+          <Button href="/contact" variant="light" size="lg" className="mt-10" withBadge>
+            Model my network
+          </Button>
+        </Reveal>
       </Section>
 
       <CtaBand />

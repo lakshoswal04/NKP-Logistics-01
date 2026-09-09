@@ -1,61 +1,131 @@
+"use client";
+
 import Image from "next/image";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
+import { StatFigure } from "@/components/site/StatFigure";
 import { TrackWidget } from "@/components/site/TrackWidget";
+import { Button } from "@/components/ui/Button";
+import { EASE, lineRise, stagger } from "@/lib/motion";
+import { STATS } from "@/lib/content";
 
+const HEADLINE = ["India's inventory", "needs a better address"];
 const CHIPS = ["Warehousing", "Fulfilment", "Inventory", "Returns", "Distribution"] as const;
 
 export function HomeHero() {
+  const ref = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
+
+  // Parallax: the photograph drifts at ~30% of scroll speed and fades slightly,
+  // so the content below appears to slide over it.
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const photoY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
+
   return (
-    <section className="relative bg-ink">
-      <div className="relative mx-auto max-w-[1440px]">
-        <div className="relative min-h-[520px] overflow-hidden lg:min-h-[600px]">
+    <section ref={ref} className="relative isolate min-h-[92svh] overflow-hidden bg-void">
+      <motion.div
+        className="absolute inset-0 -z-10"
+        style={reduced ? undefined : { y: photoY }}
+      >
+        <div className="relative h-[118%] w-full">
           <Image
-            src="/media/hero-racking.jpg"
-            alt="High-bay racking inside an NKP fulfilment centre"
+            src="/media/hero-aisle-cinematic.jpg"
+            alt="A stocked racking aisle running the length of an NKP fulfilment centre"
             fill
             priority
             sizes="100vw"
-            className="object-cover object-center"
+            className="object-cover object-center brightness-[0.92] saturate-[0.85] motion-safe:animate-ken-burns"
           />
-          <div className="hero-scrim absolute inset-0" aria-hidden />
+        </div>
+        <div className="cine-scrim absolute inset-0" aria-hidden />
+      </motion.div>
 
-          <div className="relative mx-auto flex min-h-[520px] max-w-[1200px] items-center px-6 lg:min-h-[600px]">
-            <div className="max-w-[620px] py-16 animate-fade-up">
-              <h1 className="font-display text-[34px] font-semibold leading-[1.12] text-white sm:text-[44px] lg:text-[52px]">
-                India&rsquo;s inventory needs a{" "}
-                <em className="font-bold not-italic text-brand">better address</em>
-              </h1>
-              <p className="mt-5 max-w-[520px] text-[16px] leading-relaxed text-white/80 sm:text-[17px]">
+      <motion.div
+        style={reduced ? undefined : { y: contentY, opacity: contentOpacity }}
+        className="mx-auto flex min-h-[92svh] max-w-[1240px] flex-col justify-end px-6 pb-12 pt-32"
+      >
+        <div className="flex flex-1 flex-col justify-center gap-10 py-10 lg:flex-row lg:items-center lg:justify-between">
+          <div className="max-w-[760px]">
+            <motion.h1
+              variants={reduced ? undefined : stagger(0.09, 0.15)}
+              initial={reduced ? undefined : "hidden"}
+              animate={reduced ? undefined : "show"}
+              className="font-display text-[38px] font-bold leading-[1.0] tracking-[-0.035em] text-ink-inverse sm:text-[50px] lg:text-[62px]"
+            >
+              {HEADLINE.map((line) => (
+                // Each line clips its own child so the rise reads as a mask.
+                <span key={line} className="block overflow-hidden pb-[0.08em]">
+                  <motion.span
+                    variants={reduced ? undefined : lineRise}
+                    className="block"
+                  >
+                    <span className="whitespace-nowrap">{line}</span>
+                  </motion.span>
+                </span>
+              ))}
+            </motion.h1>
+
+            <motion.div
+              initial={reduced ? undefined : { opacity: 0, y: 18 }}
+              animate={reduced ? undefined : { opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: EASE, delay: 0.55 }}
+            >
+              <p className="mt-7 max-w-[500px] text-[16px] leading-relaxed text-ink-inverse-2 sm:text-[17px]">
                 42 multi-client fulfilment centres, one warehouse management system, and stock held
                 close enough to your customers that next-day stops being a premium.
               </p>
 
-              <ul className="mt-7 flex flex-wrap items-center gap-x-3 gap-y-2">
+              <div className="mt-9 flex flex-wrap items-center gap-4">
+                <Button href="/contact" variant="light" size="lg" withBadge>
+                  Model my network
+                </Button>
+                <Button href="/services/warehousing" variant="ghost" size="lg"
+                        className="text-ink-inverse hover:text-brand">
+                  Explore warehousing
+                </Button>
+              </div>
+
+              <ul className="mt-9 flex flex-wrap items-center gap-x-3 gap-y-2">
                 {CHIPS.map((chip, index) => (
                   <li key={chip} className="flex items-center gap-3">
                     {index > 0 && <span className="chip-sep" aria-hidden />}
-                    <span className="text-[14px] font-medium text-white/90">{chip}</span>
+                    <span className="text-[13.5px] font-medium text-ink-inverse-2">{chip}</span>
                   </li>
                 ))}
               </ul>
-
-              <div className="mt-9 h-11 w-11 bg-brand" aria-hidden />
-            </div>
+            </motion.div>
           </div>
 
-          {/* The widget overlaps the photograph on desktop; below lg it drops
-              beneath the image so it never covers the headline. */}
-          <div className="pointer-events-none absolute inset-0 hidden items-center justify-end lg:flex">
-            <div className="mx-auto flex w-full max-w-[1200px] justify-end px-6">
-              <TrackWidget className="pointer-events-auto translate-y-6" />
-            </div>
-          </div>
+          <motion.div
+            initial={reduced ? undefined : { opacity: 0, y: 26 }}
+            animate={reduced ? undefined : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: EASE, delay: 0.4 }}
+            className="w-full shrink-0 lg:w-[400px]"
+          >
+            <TrackWidget />
+          </motion.div>
         </div>
 
-        <div className="bg-ink px-6 pb-12 lg:hidden">
-          <TrackWidget className="mx-auto -translate-y-8" />
-        </div>
-      </div>
+        {/* Stats overlay the darkened lower edge of the photograph. */}
+        <motion.dl
+          initial={reduced ? undefined : { opacity: 0, y: 20 }}
+          animate={reduced ? undefined : { opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: EASE, delay: 0.75 }}
+          className="grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line-inverse pt-8 md:grid-cols-3 lg:grid-cols-5"
+        >
+          {STATS.map((stat) => (
+            <div key={stat.label}>
+              <dt className="sr-only">{stat.label}</dt>
+              <dd>
+                <StatFigure value={stat.value} label={stat.label} inverse />
+              </dd>
+            </div>
+          ))}
+        </motion.dl>
+      </motion.div>
     </section>
   );
 }

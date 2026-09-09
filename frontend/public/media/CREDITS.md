@@ -7,7 +7,9 @@ hotlinked so the site builds and renders without network access.
 
 | File | Source |
 |---|---|
+| hero-aisle-cinematic.jpg | pexels.com/photo/4483775 |
 | hero-racking.jpg | pexels.com/photo/12706241 |
+| ops-trolley.jpg | pexels.com/photo/1797428 |
 | hero-warehouse-aisle.jpg | pexels.com/photo/4487383 |
 | fc-stock-red-racking.jpg | pexels.com/photo/4481327 |
 | fc-floor-wide.jpg | pexels.com/photo/4481326 |
@@ -17,5 +19,3 @@ hotlinked so the site builds and renders without network access.
 | ops-dispatch-van.jpg | pexels.com/photo/5025517 |
 | ops-pallets.jpg | pexels.com/photo/36463675 |
 | line-haul-truck.jpg | pexels.com/photo/11087837 |
-| containers-stacked.jpg | pexels.com/photo/20034030 |
-| truck-highway.jpg | pexels.com/photo/12261472 |

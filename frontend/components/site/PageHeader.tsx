@@ -13,14 +13,14 @@ export function PageHeader({
   className?: string;
 }) {
   return (
-    <header className={cn("bg-ink", className)}>
-      <div className="mx-auto max-w-[1200px] px-6 py-14 lg:py-20">
-        {eyebrow && <p className="eyebrow mb-4 text-white/50">{eyebrow}</p>}
-        <h1 className="rule-red max-w-[760px] font-display text-[30px] font-bold leading-[1.15] text-white sm:text-[38px] lg:text-[44px]">
+    <header className={cn("bg-void", className)}>
+      <div className="mx-auto max-w-[1240px] px-6 pb-16 pt-32 lg:pb-24 lg:pt-40">
+        {eyebrow && <p className="eyebrow mb-5 text-brand-on-dark">{eyebrow}</p>}
+        <h1 className="max-w-[860px] font-display text-[36px] font-bold leading-[1.04] tracking-[-0.035em] text-ink-inverse sm:text-[46px] lg:text-[56px]">
           {title}
         </h1>
         {text && (
-          <p className="mt-6 max-w-[620px] text-[15px] leading-relaxed text-white/70">{text}</p>
+          <p className="mt-7 max-w-[640px] text-[16px] leading-relaxed text-ink-inverse-2">{text}</p>
         )}
       </div>
     </header>

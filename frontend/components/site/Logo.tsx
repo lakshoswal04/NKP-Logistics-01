@@ -21,9 +21,9 @@ export function Logo({ className, inverse = true }: { className?: string; invers
 export function LogoMark({ size = 28 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden>
-      <rect width="32" height="32" rx="3" fill="#101014" />
-      <path d="M7 23V9h3.2l7.4 9.1V9H21v14h-3.2L10.4 14v9H7Z" fill="#fff" />
-      <rect x="7" y="24.5" width="18" height="2.5" fill="#E1252B" />
+      <rect width="32" height="32" rx="9" fill="currentColor" className="text-ink-inverse/10" />
+      <path d="M7 23V9h3.2l7.4 9.1V9H21v14h-3.2L10.4 14v9H7Z" fill="currentColor" className="text-ink-inverse" />
+      <rect x="7" y="24.5" width="18" height="2.5" rx="1.25" fill="var(--color-brand)" />
     </svg>
   );
 }

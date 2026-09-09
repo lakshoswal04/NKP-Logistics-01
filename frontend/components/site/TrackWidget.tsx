@@ -31,14 +31,17 @@ export function TrackWidget({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "w-full max-w-[420px] bg-white p-6 shadow-[0_24px_60px_-20px_rgb(10_10_12/0.45)] sm:p-7",
+        // A dark drop shadow is invisible against the hero; the card is lifted
+        // with a hairline and a soft ambient glow instead.
+        "w-full rounded-xl border border-line-inverse bg-paper/[0.97] p-6 backdrop-blur-sm sm:p-7",
+        "shadow-[0_28px_70px_-24px_rgb(0_0_0/0.7)]",
         className,
       )}
     >
       <div className="flex items-center gap-6 border-b border-line pb-3">
         <span className="relative pb-3 text-[15px] font-bold text-ink">
           Track order
-          <span className="absolute inset-x-0 -bottom-[13px] h-[2.5px] bg-brand" aria-hidden />
+          <span className="absolute inset-x-0 -bottom-[13px] h-[2.5px] rounded-full bg-brand" aria-hidden />
         </span>
         <a
           href="/contact"
@@ -71,10 +74,10 @@ export function TrackWidget({ className }: { className?: string }) {
                 aria-selected={selected}
                 onClick={() => setMode(m.key)}
                 className={cn(
-                  "border px-3 py-2.5 text-[13px] font-semibold transition-colors",
+                  "border px-3 py-2.5 text-[13px] font-semibold transition-colors first:rounded-l-sm last:rounded-r-sm",
                   selected
-                    ? "border-ink bg-ink text-white"
-                    : "border-line-strong bg-white text-ink-3 hover:text-ink",
+                    ? "border-ink bg-ink text-paper"
+                    : "border-line-strong bg-paper text-ink-3 hover:text-ink",
                 )}
               >
                 {m.label}
@@ -93,12 +96,12 @@ export function TrackWidget({ className }: { className?: string }) {
           onChange={(event) => setValue(event.target.value)}
           placeholder={active.hint}
           autoComplete="off"
-          className="mt-3 w-full border border-line-strong px-4 py-3 text-sm text-ink placeholder:text-ink-3 focus:border-ink focus:outline-none"
+          className="mt-3 w-full rounded-sm border border-line-strong px-4 py-3 text-sm text-ink placeholder:text-ink-3 transition-colors focus:border-ink focus:outline-none"
         />
 
         <button
           type="submit"
-          className="mt-3 w-full bg-ink py-3.5 text-sm font-semibold text-white transition-colors hover:bg-brand disabled:opacity-40"
+          className="mt-3 w-full rounded-pill bg-ink py-3.5 text-sm font-semibold text-paper transition-colors hover:bg-brand disabled:opacity-40"
           disabled={!value.trim()}
         >
           Track
