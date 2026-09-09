@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 
 import { Logo } from "@/components/site/Logo";
+import { getAccessToken, logout } from "@/lib/auth";
 import { cn } from "@/lib/cn";
 
 const LINKS = [
@@ -15,9 +16,15 @@ const LINKS = [
   { label: "Contact", href: "/contact" },
 ] as const;
 
+const noopSubscribe = () => () => {};
+
 export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
+  // useSyncExternalStore rather than reading localStorage during render: the
+  // server render has no token, and reading it directly would hydrate mismatched.
+  const token = useSyncExternalStore(noopSubscribe, getAccessToken, () => null);
 
   // The drawer closes on link click rather than in an effect keyed on pathname:
   // setState inside an effect body triggers a second render pass, and the click
@@ -55,12 +62,25 @@ export function Navbar() {
         </ul>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <Link
-            href="/login"
-            className="text-[14px] font-medium text-white/75 transition-colors hover:text-white"
-          >
-            Sign in
-          </Link>
+          {token ? (
+            <button
+              type="button"
+              onClick={() => {
+                logout();
+                window.location.assign("/");
+              }}
+              className="text-[14px] font-medium text-white/75 transition-colors hover:text-white"
+            >
+              Sign out
+            </button>
+          ) : (
+            <Link
+              href="/login"
+              className="text-[14px] font-medium text-white/75 transition-colors hover:text-white"
+            >
+              Sign in
+            </Link>
+          )}
           <Link
             href="/contact"
             className="rounded-[3px] bg-white px-5 py-2.5 text-[13.5px] font-semibold text-ink transition-colors hover:bg-mist"
@@ -102,9 +122,22 @@ export function Navbar() {
               </li>
             ))}
             <li>
-              <Link href="/login" onClick={close} className="block py-3 text-[15px] text-white/85">
-                Sign in
-              </Link>
+              {token ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    logout();
+                    window.location.assign("/");
+                  }}
+                  className="block w-full py-3 text-left text-[15px] text-white/85"
+                >
+                  Sign out
+                </button>
+              ) : (
+                <Link href="/login" onClick={close} className="block py-3 text-[15px] text-white/85">
+                  Sign in
+                </Link>
+              )}
             </li>
           </ul>
           <Link
