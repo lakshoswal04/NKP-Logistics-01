@@ -1,6 +1,6 @@
 import logging
 
-from fastapi import APIRouter, Depends, Request, status
+from fastapi import APIRouter, BackgroundTasks, Depends, Request, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import get_settings
@@ -21,7 +21,12 @@ settings = get_settings()
 
 @router.post("", response_model=LeadOut, status_code=status.HTTP_201_CREATED)
 @limiter.limit(settings.leads_rate_limit)
-async def create_lead(request: Request, body: LeadCreate, db: AsyncSession = Depends(get_db)):
+async def create_lead(
+    request: Request,
+    body: LeadCreate,
+    background: BackgroundTasks,
+    db: AsyncSession = Depends(get_db),
+):
     lead = Lead(
         full_name=body.full_name,
         email=body.email.lower(),
@@ -63,13 +68,19 @@ async def create_lead(request: Request, body: LeadCreate, db: AsyncSession = Dep
 
     await db.commit()
 
+    # Deferred rather than awaited inline: a slow provider must not add its
+    # latency to the visitor's form submission, and a delivery failure must not
+    # turn a captured lead into a 500.
     email = get_email_provider()
-    await email.send(
+    background.add_task(
+        email.send,
         to=settings.sales_notification_email,
         subject=f"New lead: {lead.full_name}" + (f" ({lead.company_name})" if lead.company_name else ""),
         body=f"Service: {lead.service or '-'} | Industry: {lead.industry or '-'}\n{lead.message or ''}",
+        reply_to=lead.email,
     )
-    await email.send(
+    background.add_task(
+        email.send,
         to=lead.email,
         subject="We received your enquiry — NKP Logistics",
         body="Thanks for reaching out. Our team will get back to you within one business day.",

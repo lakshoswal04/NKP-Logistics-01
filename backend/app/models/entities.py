@@ -276,6 +276,17 @@ class Invoice(TimestampMixin, Base):
     def balance_paise(self) -> int:
         return max(self.total_paise - self.amount_paid_paise, 0)
 
+    @property
+    def is_overdue(self) -> bool:
+        """Past the due date with money still owing.
+
+        Derived rather than stored so an invoice cannot sit at status "sent"
+        with a due date three weeks in the past and still look current.
+        """
+        if self.status in (InvoiceStatus.paid, InvoiceStatus.void, InvoiceStatus.draft):
+            return False
+        return self.balance_paise > 0 and self.due_date < date.today()
+
 
 class InvoiceLineItem(Base):
     __tablename__ = "invoice_line_items"
