@@ -152,8 +152,22 @@ class Settings(BaseSettings):
             )
         if self.debug:
             raise ValueError("DEBUG must be false in production (it exposes /docs and tracebacks).")
-        if not self.cors_origins and not self.cors_origin_regex:
-            raise ValueError("Set CORS_ORIGINS to the web app's origin, or the browser will block it.")
+        # The earlier version of this check tested `not self.cors_origins`,
+        # which never fired: the field defaults to ["http://localhost:5001"],
+        # so it is never empty. A production deploy therefore booted happily
+        # with localhost-only CORS and failed only in the browser, with an
+        # error that points at the frontend rather than the missing env var.
+        remote_origins = [
+            origin
+            for origin in self.cors_origins
+            if not origin.startswith(("http://localhost", "http://127.0.0.1", "https://localhost"))
+        ]
+        if not remote_origins and not self.cors_origin_regex:
+            raise ValueError(
+                "CORS_ORIGINS is unset or contains only localhost, so browsers will block "
+                "every request from the deployed frontend. Set it to the web app's exact "
+                "origin, e.g. CORS_ORIGINS=https://your-app.vercel.app"
+            )
         return self
 
 
