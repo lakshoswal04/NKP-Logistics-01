@@ -69,7 +69,7 @@ export function PlacementTool({ index }: { index: number }) {
                 type="button"
                 aria-label={`Remove ${row.city || "row"}`}
                 onClick={() => setRows((prev) => prev.filter((_, j) => j !== i))}
-                className="shrink-0 border border-line-strong px-3 text-ink-3 transition-colors hover:border-danger hover:text-danger"
+                className="shrink-0 rounded-sm border border-line-strong px-3 text-ink-3 transition-colors hover:border-danger hover:text-danger"
               >
                 ×
               </button>
@@ -108,7 +108,7 @@ export function PlacementTool({ index }: { index: number }) {
                     {pick.share_pct}%
                   </span>
                 </div>
-                <div className="mt-1.5 h-2.5 w-full bg-mist">
+                <div className="mt-1.5 h-2.5 w-full overflow-hidden rounded-pill bg-mist">
                   <div
                     className="h-full bg-accent transition-all duration-500"
                     style={{ width: `${Math.min(pick.share_pct, 100)}%` }}
@@ -120,7 +120,7 @@ export function PlacementTool({ index }: { index: number }) {
           </div>
 
           {result.unmapped_orders > 0 && (
-            <p className="mt-5 border-l-2 border-warning bg-warning-soft p-3 text-[12.5px] text-ink-2">
+            <p className="mt-5 rounded-lg border-l-2 border-warning bg-warning-soft p-3.5 text-[12.5px] text-ink-2">
               {result.unmapped_orders.toLocaleString("en-IN")} orders fall outside our mapped city
               list and would ship long-haul from the nearest centre.
             </p>

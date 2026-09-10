@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/site/PageHeader";
 import { RaiseQueryForm } from "@/components/site/RaiseQueryForm";
 import { SupportCentre } from "@/components/site/SupportCentre";
 import { Section, SectionHeading } from "@/components/ui/Section";
+import { Reveal } from "@/components/ui/Reveal";
 import { COMPANY } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -28,7 +29,7 @@ export default function SupportPage() {
 
       <Section tone="mist" id="raise">
         <div className="grid gap-10 lg:grid-cols-[1fr_600px]">
-          <div>
+          <Reveal>
             <SectionHeading title="Still stuck? Raise a query" />
             <p className="mt-6 max-w-[380px] text-[15px] leading-relaxed text-ink-2">
               Tell us what happened and we&rsquo;ll pick it up. Include an AWB or invoice number
@@ -61,7 +62,7 @@ export default function SupportPage() {
 
             <div
               id="fraud"
-              className="mt-9 border-l-2 border-accent bg-accent-soft p-5"
+              className="mt-9 rounded-xl border-l-2 border-accent bg-accent-soft p-6"
             >
               <h3 className="text-[13.5px] font-bold text-ink">Fraud advisory</h3>
               <p className="mt-2 text-[13px] leading-relaxed text-ink-2">
@@ -74,9 +75,11 @@ export default function SupportPage() {
                 .
               </p>
             </div>
-          </div>
+          </Reveal>
 
-          <RaiseQueryForm />
+          <Reveal delay={0.08}>
+            <RaiseQueryForm />
+          </Reveal>
         </div>
       </Section>
     </>

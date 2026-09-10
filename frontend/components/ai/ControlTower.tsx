@@ -9,6 +9,7 @@ import { PlacementTool } from "@/components/ai/PlacementTool";
 import { ModeBadge } from "@/components/ai/Primitives";
 import { TriageTool } from "@/components/ai/TriageTool";
 import { Section, SectionHeading } from "@/components/ui/Section";
+import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { fetchAiStatus } from "@/lib/aiApi";
 
 const FALLBACK_SUGGESTIONS = [
@@ -28,7 +29,7 @@ export function ControlTower() {
   return (
     <>
       <Section tone="paper">
-        <div className="flex flex-col gap-3 border border-line bg-mist p-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 rounded-2xl bg-mist p-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-start gap-3">
             {status && <ModeBadge mode={status.mode} model={status.model} />}
             <p className="max-w-[720px] text-[13px] leading-relaxed text-ink-2">
@@ -40,7 +41,7 @@ export function ControlTower() {
           </div>
         </div>
 
-        <div className="mt-12">
+        <Reveal className="mt-12">
           <SectionHeading title="01 — Ops Copilot" />
           <p className="mt-5 max-w-[620px] text-[15px] leading-relaxed text-ink-2">
             Ask a question in plain English. The copilot calls real tools against your own
@@ -50,7 +51,7 @@ export function ControlTower() {
           <div className="mt-8">
             <Copilot suggestions={status?.suggestions ?? FALLBACK_SUGGESTIONS} />
           </div>
-        </div>
+        </Reveal>
       </Section>
 
       <Section tone="mist">
@@ -59,12 +60,12 @@ export function ControlTower() {
           Open to everyone — no sign-in needed. Each one runs against live logic and tells you how
           it reached its answer.
         </p>
-        <div className="mt-10 grid gap-6 xl:grid-cols-2">
-          <AddressTool index={2} />
-          <PlacementTool index={3} />
-          <TriageTool index={4} />
-          <NarrativeTool index={5} />
-        </div>
+        <RevealGroup className="mt-10 grid gap-6 xl:grid-cols-2" gap={0.06}>
+          <RevealItem><AddressTool index={2} /></RevealItem>
+          <RevealItem><PlacementTool index={3} /></RevealItem>
+          <RevealItem><TriageTool index={4} /></RevealItem>
+          <RevealItem><NarrativeTool index={5} /></RevealItem>
+        </RevealGroup>
       </Section>
     </>
   );

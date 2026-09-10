@@ -12,21 +12,21 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-mist px-6 py-16">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-void px-6 py-16">
       <Link href="/" className="mb-8 flex items-center gap-3">
         <LogoMark size={34} />
-        <span className="font-display text-[17px] font-bold uppercase tracking-[0.04em] text-ink">
-          <span className="text-accent-ink">NKP</span> Logistics
+        <span className="font-display text-[17px] font-bold uppercase tracking-[0.04em] text-ink-inverse">
+          <span className="text-accent-on-dark">NKP</span> Logistics
         </span>
       </Link>
 
-      <div className="w-full max-w-[420px] border border-line bg-white p-8">
+      <div className="w-full max-w-[440px] rounded-2xl bg-paper p-9">
         <Suspense fallback={<p className="text-[13.5px] text-ink-3">Loading…</p>}>
           <LoginForm />
         </Suspense>
       </div>
 
-      <Link href="/" className="mt-8 text-[12.5px] text-ink-3 transition-colors hover:text-accent-ink">
+      <Link href="/" className="mt-8 text-[12.5px] text-ink-inverse-3 transition-colors hover:text-accent-on-dark">
         ← Back to the site
       </Link>
     </main>

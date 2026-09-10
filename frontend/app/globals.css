@@ -38,11 +38,12 @@
        #f48424 on white        2.57  FAIL -> never use as text on a light ground
        #f48424 on near-black   7.86  PASS
        black   on #f48424      7.23  PASS -> the accent band takes BLACK text
-       #b85a0f on white        4.66  PASS -> accent text on light grounds
+       #a54e0c on white        5.68  PASS -> accent text on light grounds
+       #a54e0c on mist         4.93  PASS -- #b85a0f was 4.04 here and failed
      Named `accent` rather than `brand` so every old call site has to be visited:
      one value can no longer serve both grounds. */
   --color-accent: #f48424;          /* fills, bands, pins, buttons */
-  --color-accent-ink: #b85a0f;      /* accent TEXT on light grounds */
+  --color-accent-ink: #a54e0c;      /* accent TEXT on paper AND mist */
   --color-accent-on-dark: #f48424;  /* accent TEXT on dark grounds */
   --color-accent-hover: #d96f14;
   --color-accent-soft: #fef1e4;

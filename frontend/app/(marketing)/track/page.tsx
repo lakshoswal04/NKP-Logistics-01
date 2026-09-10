@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { PageHeader } from "@/components/site/PageHeader";
 import { TrackingView } from "@/components/tracking/TrackingView";
 import { Section, SectionHeading } from "@/components/ui/Section";
+import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { SUPPORT_CATEGORIES } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -30,14 +31,16 @@ export default function TrackPage() {
       </Section>
 
       <Section tone="mist">
-        <SectionHeading title="Frequently asked" />
-        <div className="mt-10 grid max-w-[900px] gap-3">
+        <Reveal>
+          <SectionHeading title="Frequently asked" />
+        </Reveal>
+        <RevealGroup className="mt-10 grid max-w-[900px] gap-3" gap={0.05}>
           {TRACK_FAQS.map((faq) => (
+            <RevealItem key={faq.q}>
             <details
-              key={faq.q}
-              className="group border border-line bg-white open:border-line-strong"
+              className="group overflow-hidden rounded-xl bg-mist"
             >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 text-[14.5px] font-semibold text-ink">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-6 text-[14.5px] font-semibold text-ink">
                 {faq.q}
                 <span
                   className="shrink-0 text-[20px] font-normal text-accent-ink transition-transform group-open:rotate-45"
@@ -46,12 +49,13 @@ export default function TrackPage() {
                   +
                 </span>
               </summary>
-              <p className="border-t border-line px-5 py-4 text-[13.5px] leading-relaxed text-ink-2">
+              <p className="border-t border-line px-6 pb-5 text-[13.5px] leading-relaxed text-ink-2">
                 {faq.a}
               </p>
             </details>
+            </RevealItem>
           ))}
-        </div>
+        </RevealGroup>
       </Section>
     </>
   );

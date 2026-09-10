@@ -73,8 +73,8 @@ export default function ContactPage() {
             <div className="mt-5 grid gap-4 sm:grid-cols-3">
               {OFFICES.map((office, index) => (
                 <Reveal key={office.city} delay={index * 0.05}>
-                  <address className="h-full border border-line p-5 not-italic">
-                    <span className="block h-[3px] w-8 bg-accent" aria-hidden />
+                  <address className="h-full rounded-xl bg-mist p-6 not-italic">
+                    
                     <p className="mt-4 font-display text-[15px] font-bold text-ink">
                       {office.city}
                     </p>

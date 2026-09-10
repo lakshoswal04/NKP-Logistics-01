@@ -22,8 +22,8 @@ export function ModuleCard({
   children: ReactNode;
 }) {
   return (
-    <section className={cn("flex flex-col border border-line bg-white", className)}>
-      <header className="border-b border-line p-6">
+    <section className={cn("flex flex-col overflow-hidden rounded-2xl bg-mist", className)}>
+      <header className="border-b border-line/60 p-7">
         <div className="flex items-start justify-between gap-4">
           <div>
             <span className="font-display text-[12px] font-bold text-accent-ink">
@@ -35,7 +35,7 @@ export function ModuleCard({
           {mode && <ModeBadge mode={mode} model={model} />}
         </div>
       </header>
-      <div className="flex flex-1 flex-col p-6">{children}</div>
+      <div className="flex flex-1 flex-col p-7">{children}</div>
     </section>
   );
 }
@@ -50,7 +50,7 @@ export function ModeBadge({ mode, model }: { mode: AiMode; model?: string | null
           : "No model key configured — composed by rules from live data"
       }
       className={cn(
-        "inline-flex shrink-0 items-center gap-1.5 rounded-[2px] px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wide",
+        "inline-flex shrink-0 items-center gap-1.5 rounded-pill px-3 py-1 text-[10.5px] font-semibold uppercase tracking-wide",
         live ? "bg-success-soft text-success" : "bg-mist text-ink-3",
       )}
     >
@@ -72,7 +72,7 @@ export function ToolTrace({ tools }: { tools: string[] }) {
       {tools.map((tool, i) => (
         <code
           key={`${tool}-${i}`}
-          className="rounded-[2px] bg-mist px-1.5 py-0.5 font-mono text-[10.5px] text-ink-2"
+          className="rounded-md bg-paper px-2 py-0.5 font-mono text-[10.5px] text-ink-2"
         >
           {tool}()
         </code>
@@ -96,7 +96,7 @@ export function RiskMeter({ value, band }: { value: number; band: string }) {
         <span className={cn("font-display text-[24px] font-bold", text)}>{pct}%</span>
       </div>
       <div
-        className="mt-2 h-2 w-full bg-mist"
+        className="mt-2 h-2 w-full overflow-hidden rounded-pill bg-paper"
         role="meter"
         aria-valuenow={pct}
         aria-valuemin={0}
@@ -112,11 +112,7 @@ export function RiskMeter({ value, band }: { value: number; band: string }) {
   );
 }
 
-export const inputCls =
-  "w-full border border-line-strong bg-white px-3.5 py-2.5 text-sm text-ink " +
-  "placeholder:text-ink-3 focus:border-ink focus:outline-none";
-
-export const labelCls = "mb-1.5 block text-[12.5px] font-medium text-ink-2";
+export { inputCls, labelCls } from "@/components/ui/forms";
 
 export function Disclaimer({ children }: { children?: ReactNode }) {
   return (

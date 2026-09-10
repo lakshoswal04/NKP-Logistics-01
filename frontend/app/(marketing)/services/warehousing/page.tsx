@@ -21,27 +21,27 @@ export default function WarehousingPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative bg-ink">
-        <div className="relative min-h-[420px] overflow-hidden lg:min-h-[480px]">
+      <section className="relative bg-void">
+        <div className="relative min-h-[72svh] overflow-hidden lg:min-h-[78svh]">
           <Image
             src="/media/hero-warehouse-aisle.jpg"
             alt="Staff walking a racking aisle inside an NKP fulfilment centre"
             fill
             priority
             sizes="100vw"
-            className="object-cover object-center"
+            className="object-cover object-center brightness-[0.98] saturate-[0.92] motion-safe:animate-ken-burns"
           />
-          <div className="hero-scrim-soft absolute inset-0" aria-hidden />
-          <div className="relative mx-auto flex min-h-[420px] max-w-[1200px] items-center px-6 lg:min-h-[480px]">
-            <div className="max-w-[560px] py-16 animate-fade-up">
-              <h1 className="font-display text-[32px] font-semibold leading-[1.14] text-white sm:text-[42px] lg:text-[48px]">
-                <span className="font-bold text-accent-on-dark">Stock closer</span> to your customers
+          <div className="cine-scrim-soft absolute inset-0" aria-hidden />
+          <div className="relative mx-auto flex min-h-[72svh] max-w-[1240px] items-center px-6 lg:min-h-[78svh]">
+            <div className="max-w-[760px] py-16 animate-fade-up">
+              <h1 className="max-w-[14ch] font-display text-[40px] font-bold leading-[0.98] tracking-[-0.04em] text-ink-inverse sm:text-[56px] lg:text-[68px]">
+                Stock closer to your customers
               </h1>
-              <p className="mt-5 max-w-[470px] text-[16px] leading-relaxed text-white/80">
+              <p className="mt-7 max-w-[46ch] text-[16px] leading-relaxed text-ink-inverse-2 sm:text-[17px]">
                 A distributed fulfilment network that shortens the delivery radius, absorbs your
                 festive peak, and gives you one honest view of inventory across every location.
               </p>
-              <Button href="#enquire" variant="light" size="lg" className="mt-8" withArrow>
+              <Button href="#enquire" variant="light" size="lg" className="mt-10" withBadge>
                 Get started
               </Button>
             </div>
@@ -92,10 +92,10 @@ export default function WarehousingPage() {
               <Reveal key={advantage.title} delay={index * 0.05}>
                 <div>
                   <Icon className="text-accent-on-dark" />
-                  <h3 className="mt-5 max-w-[300px] font-display text-[17px] font-bold leading-snug text-white">
+                  <h3 className="mt-5 max-w-[26ch] font-display text-[18px] font-bold leading-snug text-ink-inverse">
                     {advantage.title}
                   </h3>
-                  <p className="mt-3 max-w-[320px] text-[13.5px] leading-relaxed text-white/65">
+                  <p className="mt-3 max-w-[34ch] text-[13.5px] leading-relaxed text-ink-inverse-2">
                     {advantage.body}
                   </p>
                 </div>
@@ -112,7 +112,7 @@ export default function WarehousingPage() {
         <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {FULFILMENT_STEPS.map((step, index) => (
             <Reveal key={step.title} delay={index * 0.05}>
-              <article className="flex h-full flex-col border-t-2 border-ink pt-5">
+              <article className="flex h-full flex-col rounded-xl bg-paper p-7">
                 <span className="font-display text-[13px] font-bold text-accent-ink">
                   {String(index + 1).padStart(2, "0")}
                 </span>
@@ -130,8 +130,8 @@ export default function WarehousingPage() {
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {SOLUTIONS.map((solution, index) => (
             <Reveal key={solution.slug} delay={index * 0.05}>
-              <article className="flex h-full flex-col border border-line p-7 transition-colors hover:border-ink">
-                <span className="block h-[3px] w-10 bg-accent" aria-hidden />
+              <article className="flex h-full flex-col rounded-xl bg-mist p-7 transition-colors hover:bg-paper">
+                
                 <h3 className="mt-5 font-display text-[19px] font-bold text-ink">
                   {solution.title}
                 </h3>
@@ -174,7 +174,7 @@ export default function WarehousingPage() {
                     ))}
                   </dl>
                 </div>
-                <figure className="relative aspect-[16/11] overflow-hidden">
+                <figure className="relative aspect-[16/11] overflow-hidden rounded-2xl">
                   <Image
                     src={study.image}
                     alt=""
@@ -209,7 +209,7 @@ export default function WarehousingPage() {
                 "No obligation and no lock-in on the first term",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3 text-[14px] text-ink-2">
-                  <span className="mt-[7px] h-1.5 w-1.5 shrink-0 bg-accent" aria-hidden />
+                  <span className="mt-[7px] size-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
                   {item}
                 </li>
               ))}

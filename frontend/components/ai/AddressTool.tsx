@@ -49,7 +49,7 @@ export function AddressTool({ index }: { index: number }) {
               key={example.label}
               type="button"
               onClick={() => setAddress(example.value)}
-              className="border border-line-strong px-2.5 py-1 text-[11.5px] text-ink-2 transition-colors hover:border-ink hover:text-ink"
+              className="rounded-pill border border-line-strong px-3.5 py-1.5 text-[11.5px] text-ink-2 transition-colors hover:border-ink hover:text-ink"
             >
               {example.label}
             </button>

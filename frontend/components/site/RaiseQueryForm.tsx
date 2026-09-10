@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/Button";
+import { inputCls } from "@/components/ui/forms";
 import { createTicket } from "@/lib/api";
 import { SUPPORT_QUERY_CATEGORIES } from "@/lib/content";
 
@@ -43,8 +44,8 @@ export function RaiseQueryForm() {
 
   if (mutation.isSuccess) {
     return (
-      <div className="border border-line bg-white p-8">
-        <span className="block h-9 w-9 bg-success" aria-hidden />
+      <div className="rounded-2xl bg-mist p-8">
+        <span className="block size-10 rounded-lg bg-success" aria-hidden />
         <h3 className="mt-5 font-display text-[21px] font-bold text-ink">Query logged</h3>
         <p className="mt-3 text-[14px] leading-relaxed text-ink-2">
           Your reference is{" "}
@@ -65,7 +66,7 @@ export function RaiseQueryForm() {
     <form
       noValidate
       onSubmit={handleSubmit((values) => mutation.mutate(values))}
-      className="border border-line bg-white p-7 sm:p-8"
+      className="rounded-2xl bg-mist p-7 sm:p-8"
     >
       <h3 className="font-display text-[19px] font-bold text-ink">Raise a query</h3>
       <p className="mt-1.5 text-[13px] text-ink-3">
@@ -117,9 +118,6 @@ export function RaiseQueryForm() {
   );
 }
 
-const inputCls =
-  "w-full border border-line-strong bg-white px-3.5 py-2.5 text-sm text-ink " +
-  "placeholder:text-ink-3 focus:border-ink focus:outline-none";
 
 function Field({
   label,

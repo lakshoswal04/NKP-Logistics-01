@@ -43,7 +43,7 @@ export const metadata: Metadata = {
 // themeColor/colorScheme moved out of `metadata` — deprecated there since 14,
 // and this is the supported export in 16.
 export const viewport: Viewport = {
-  themeColor: "#101014",
+  themeColor: "#050706",
   colorScheme: "light",
 };
 

@@ -88,7 +88,7 @@ export function Copilot({ suggestions }: { suggestions: string[] }) {
 
   if (!token) {
     return (
-      <div className="border border-line bg-mist p-8 text-center">
+      <div className="rounded-2xl bg-mist p-10 text-center">
         <h3 className="font-display text-[19px] font-bold text-ink">Sign in to use the copilot</h3>
         <p className="mx-auto mt-3 max-w-[440px] text-[13.5px] leading-relaxed text-ink-2">
           The copilot answers from your own consignments, invoices and receivables, so it needs to
@@ -107,7 +107,7 @@ export function Copilot({ suggestions }: { suggestions: string[] }) {
   return (
     <div className="flex flex-col">
       <div
-        className="flex max-h-[440px] min-h-[220px] flex-col gap-5 overflow-y-auto border border-line bg-mist p-5"
+        className="flex max-h-[440px] min-h-[220px] flex-col gap-5 overflow-y-auto rounded-2xl bg-mist p-6"
         role="log"
         aria-live="polite"
         aria-label="Copilot conversation"
@@ -121,11 +121,11 @@ export function Copilot({ suggestions }: { suggestions: string[] }) {
 
         {turns.map((turn, i) =>
           turn.role === "user" ? (
-            <p key={i} className="self-end max-w-[80%] bg-ink px-4 py-2.5 text-[13.5px] text-white">
+            <p key={i} className="max-w-[80%] self-end rounded-2xl rounded-br-md bg-ink px-4 py-3 text-[13.5px] text-paper">
               {turn.text}
             </p>
           ) : (
-            <div key={i} className="max-w-[92%] bg-white p-4">
+            <div key={i} className="max-w-[92%] rounded-2xl rounded-bl-md bg-paper p-5">
               {turn.tools && turn.tools.length > 0 && (
                 <div className="mb-3">
                   <ToolTrace tools={turn.tools} />
@@ -153,7 +153,7 @@ export function Copilot({ suggestions }: { suggestions: string[] }) {
               <button
                 type="button"
                 onClick={() => ask(suggestion)}
-                className="border border-line-strong px-3 py-1.5 text-[12.5px] text-ink-2 transition-colors hover:border-ink hover:text-ink"
+                className="rounded-pill border border-line-strong px-4 py-2 text-[12.5px] text-ink-2 transition-colors hover:border-ink hover:text-ink"
               >
                 {suggestion}
               </button>

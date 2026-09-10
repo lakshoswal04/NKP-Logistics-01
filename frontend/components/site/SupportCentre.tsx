@@ -39,7 +39,7 @@ export function SupportCentre() {
   return (
     <div className="grid gap-8 lg:grid-cols-[290px_1fr]">
       <nav aria-label="Support categories">
-        <ul className="border border-line">
+        <ul className="overflow-hidden rounded-xl bg-mist">
           {SUPPORT_CATEGORIES.map((category) => {
             const active = !trimmed && category.slug === activeSlug;
             return (
@@ -53,12 +53,12 @@ export function SupportCentre() {
                   }}
                   aria-current={active ? "true" : undefined}
                   className={cn(
-                    "flex w-full items-center gap-3 border-b border-line px-4 py-3.5 text-left text-[14px] font-medium transition-colors last:border-b-0",
-                    active ? "bg-mist text-ink" : "bg-white text-ink-2 hover:bg-mist/60",
+                    "flex w-full items-center gap-3 border-b border-line/60 px-5 py-4 text-left text-[14px] font-medium transition-colors last:border-b-0",
+                    active ? "bg-paper text-ink" : "text-ink-2 hover:bg-paper/60",
                   )}
                 >
                   <span
-                    className={cn("h-2.5 w-2.5 shrink-0", active ? "bg-accent" : "bg-line-strong")}
+                    className={cn("size-2 shrink-0 rounded-full", active ? "bg-accent" : "bg-line-strong")}
                     aria-hidden
                   />
                   {category.title}
@@ -87,7 +87,7 @@ export function SupportCentre() {
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Type the topic you need help with"
-            className="w-full border border-line-strong bg-white py-3.5 pl-11 pr-4 text-sm text-ink placeholder:text-ink-3 focus:border-ink focus:outline-none"
+            className="w-full rounded-pill border border-line-strong bg-paper py-3.5 pl-12 pr-5 text-sm text-ink placeholder:text-ink-3 transition-colors focus:border-ink focus:outline-none"
           />
         </div>
 
@@ -107,13 +107,13 @@ export function SupportCentre() {
                 {topics.map((topic) => {
                   const open = openIndex === topic.key;
                   return (
-                    <article key={topic.key} className="border border-line bg-white">
+                    <article key={topic.key} className="overflow-hidden rounded-xl bg-mist">
                       <h4>
                         <button
                           type="button"
                           onClick={() => setOpenIndex(open ? null : topic.key)}
                           aria-expanded={open}
-                          className="flex w-full items-start justify-between gap-4 p-4 text-left"
+                          className="flex w-full items-start justify-between gap-4 p-5 text-left"
                         >
                           <span className="border-l-2 border-accent pl-3 text-[14.5px] font-semibold text-ink">
                             {topic.q}
@@ -130,7 +130,7 @@ export function SupportCentre() {
                         </button>
                       </h4>
                       {open && (
-                        <p className="border-t border-line px-4 py-4 pl-[26px] text-[13.5px] leading-relaxed text-ink-2">
+                        <p className="border-t border-line px-5 pb-5 pl-[30px] text-[13.5px] leading-relaxed text-ink-2">
                           {topic.a}
                         </p>
                       )}

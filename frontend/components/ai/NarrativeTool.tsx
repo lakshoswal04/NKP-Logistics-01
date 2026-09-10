@@ -106,7 +106,7 @@ export function NarrativeTool({ index }: { index: number }) {
                 {copied ? "Copied" : "Copy"}
               </button>
             </div>
-            <div className="border border-line bg-mist">
+            <div className="overflow-hidden rounded-xl bg-paper">
               <p className="border-b border-line px-4 py-2.5 text-[12.5px] font-semibold text-ink">
                 {result.email_subject}
               </p>

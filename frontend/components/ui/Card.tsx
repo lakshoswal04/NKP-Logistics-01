@@ -20,5 +20,5 @@ export function Card({
   children: ReactNode;
   tone?: Tone;
 }) {
-  return <div className={cn("rounded-xl", TONES[tone], className)}>{children}</div>;
+  return <div className={cn("rounded-2xl", TONES[tone], className)}>{children}</div>;
 }

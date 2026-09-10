@@ -64,12 +64,12 @@ export function TrackingView() {
           onChange={(event) => setInput(event.target.value)}
           placeholder="AWB, order ID or LRN — e.g. NKP2026A1B2"
           autoComplete="off"
-          className="w-full border border-line-strong bg-white px-4 py-3 text-sm text-ink placeholder:text-ink-3 focus:border-ink focus:outline-none sm:max-w-[420px]"
+          className="w-full rounded-pill border border-line-strong bg-paper px-5 py-3 text-sm text-ink placeholder:text-ink-3 transition-colors focus:border-ink focus:outline-none sm:max-w-[420px]"
         />
         <button
           type="submit"
           disabled={!input.trim()}
-          className="bg-ink px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent disabled:opacity-40"
+          className="rounded-pill bg-ink px-8 py-3 text-sm font-semibold text-paper transition-colors hover:bg-accent hover:text-ink disabled:opacity-40"
         >
           Track
         </button>

@@ -63,7 +63,7 @@ export function TriageTool({ index }: { index: number }) {
               key={example.label}
               type="button"
               onClick={() => setMessage(example.value)}
-              className="border border-line-strong px-2.5 py-1 text-[11.5px] text-ink-2 transition-colors hover:border-ink hover:text-ink"
+              className="rounded-pill border border-line-strong px-3.5 py-1.5 text-[11.5px] text-ink-2 transition-colors hover:border-ink hover:text-ink"
             >
               {example.label}
             </button>
@@ -77,11 +77,11 @@ export function TriageTool({ index }: { index: number }) {
       {result && (
         <div className="mt-6 border-t border-line pt-6">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-[2px] bg-ink px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-white">
+            <span className="rounded-pill bg-ink px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-white">
               {result.category}
             </span>
             <span
-              className={`rounded-[2px] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide ${
+              className={`rounded-pill px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide ${
                 result.urgency === "high"
                   ? "bg-danger-soft text-danger"
                   : "bg-mist text-ink-2"
@@ -90,7 +90,7 @@ export function TriageTool({ index }: { index: number }) {
               {result.urgency} priority
             </span>
             {result.needs_human && (
-              <span className="rounded-[2px] bg-warning-soft px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-warning">
+              <span className="rounded-pill bg-warning-soft px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-warning">
                 Needs a human
               </span>
             )}
@@ -128,7 +128,7 @@ export function TriageTool({ index }: { index: number }) {
                 {copied ? "Copied" : "Copy"}
               </button>
             </div>
-            <p className="whitespace-pre-line border border-line bg-mist p-4 text-[13px] leading-relaxed text-ink-2">
+            <p className="whitespace-pre-line rounded-xl bg-paper p-5 text-[13px] leading-relaxed text-ink-2">
               {result.suggested_reply}
             </p>
           </div>

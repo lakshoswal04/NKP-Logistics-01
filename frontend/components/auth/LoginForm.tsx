@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/Button";
+import { inputCls } from "@/components/ui/forms";
 import { ApiError } from "@/lib/api";
 import { login } from "@/lib/auth";
 
@@ -12,9 +13,6 @@ const DEMO_ACCOUNTS = [
   { label: "Admin", email: "admin@demo.nkp", note: "Full access — invoicing, tickets, all accounts" },
 ];
 
-const inputCls =
-  "w-full border border-line-strong bg-white px-3.5 py-2.5 text-sm text-ink " +
-  "placeholder:text-ink-3 focus:border-ink focus:outline-none";
 
 export function LoginForm() {
   const router = useRouter();
@@ -84,7 +82,7 @@ export function LoginForm() {
         </label>
 
         {error && (
-          <p role="alert" className="border-l-2 border-danger bg-danger-soft p-3 text-[13px] text-danger">
+          <p role="alert" className="rounded-lg border-l-2 border-danger bg-danger-soft p-3.5 text-[13px] text-danger">
             {error}
           </p>
         )}
@@ -107,7 +105,7 @@ export function LoginForm() {
                   setPassword("demo1234");
                   submit(account.email, "demo1234");
                 }}
-                className="w-full border border-line bg-white px-3.5 py-2.5 text-left transition-colors hover:border-ink disabled:opacity-50"
+                className="w-full rounded-lg border border-line bg-paper px-4 py-3 text-left transition-colors hover:border-ink disabled:opacity-50"
               >
                 <span className="block text-[13px] font-semibold text-ink">
                   {account.label} — {account.email}
