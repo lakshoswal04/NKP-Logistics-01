@@ -1,0 +1,85 @@
+# Render blueprint — https://render.com/docs/blueprint-spec
+#
+# Deploys the FastAPI backend and its Postgres database. The Next.js frontend
+# is deployed separately on Vercel; see DEPLOYMENT.md.
+#
+# To use: Render Dashboard -> New -> Blueprint -> point at this repository.
+
+databases:
+  - name: nkp-postgres
+    databaseName: nkp_logistics
+    user: nkp
+    plan: free
+    postgresMajorVersion: "16"
+
+services:
+  - type: web
+    name: nkp-api
+    runtime: python
+    plan: free
+    region: singapore          # closest region to the Indian userbase
+    rootDir: backend
+    branch: main
+
+    buildCommand: pip install -r requirements.txt
+    # Migrations run before the server binds, so the app never serves a request
+    # against a schema it does not have. $PORT is injected by Render.
+    startCommand: alembic upgrade head && python -m app.seed_boot && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+
+    healthCheckPath: /health
+
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.13"
+
+      # Supplied by the managed database above. Render emits a postgres:// URL;
+      # Settings._normalise_database_url rewrites it to postgresql+asyncpg://
+      # and strips the sslmode parameter, which asyncpg rejects.
+      - key: DATABASE_URL
+        fromDatabase:
+          name: nkp-postgres
+          property: connectionString
+
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: "false"
+
+      # Populates the demo dataset (tracking IDs, invoices, demo logins) on the
+      # first boot against an empty database. The seeder is idempotent, so
+      # subsequent deploys leave existing data alone. Set to false for a real
+      # tenant.
+      - key: SEED_ON_START
+        value: "true"
+
+      # Generated once by Render and then held stable. Rotating it invalidates
+      # every issued access and refresh token.
+      - key: JWT_SECRET
+        generateValue: true
+
+      # Set these to the Vercel domains after the frontend's first deploy.
+      # CORS_ORIGINS accepts a comma-separated list.
+      - key: CORS_ORIGINS
+        sync: false
+      - key: CORS_ORIGIN_REGEX
+        sync: false
+      - key: WEB_BASE_URL
+        sync: false
+
+      # --- Optional provider credentials -------------------------------------
+      # Every one of these is optional. Left unset, the matching provider falls
+      # back to its mock and the app runs fully — it just says so in the UI.
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: EMAIL_PROVIDER
+        value: mock            # set to "resend" once EMAIL_API_KEY is present
+      - key: EMAIL_API_KEY
+        sync: false
+      - key: PAYMENT_PROVIDER
+        value: mock            # set to "razorpay" once the keys below are present
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: RAZORPAY_WEBHOOK_SECRET
+        sync: false

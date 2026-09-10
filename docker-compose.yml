@@ -1,6 +1,12 @@
+# Local development stack. Production is Render (api + Postgres) and Vercel
+# (web) — see DEPLOYMENT.md.
+
 services:
   db:
-    image: postgis/postgis:16-3.4
+    # Plain Postgres 16, matching the Render blueprint. PostGIS was here
+    # previously but no geometry types are used — routes are stored as plain
+    # lat/lng floats and projected in the client.
+    image: postgres:16-alpine
     environment:
       POSTGRES_USER: nkp
       POSTGRES_PASSWORD: nkp
@@ -15,31 +21,27 @@ services:
       timeout: 5s
       retries: 10
 
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-
   api:
     build: ./backend
     env_file:
       - ./backend/.env
     environment:
       DATABASE_URL: postgresql+asyncpg://nkp:nkp@db:5432/nkp_logistics
-      REDIS_URL: redis://redis:6379/0
+      CORS_ORIGINS: http://localhost:5001
+      SEED_ON_START: "true"
+      PORT: "8080"
     ports:
       - "8080:8080"
     depends_on:
       db:
         condition: service_healthy
-    command: sh -c "alembic upgrade head && python -m app.seed && uvicorn app.main:app --host 0.0.0.0 --port 8080"
 
   web:
-    build: ./frontend
-    env_file:
-      - ./frontend/.env
-    environment:
-      NEXT_PUBLIC_API_URL: http://localhost:8080
+    build:
+      context: ./frontend
+      args:
+        # Build-time, not runtime — see the note in frontend/Dockerfile.
+        NEXT_PUBLIC_API_URL: http://localhost:8080
     ports:
       - "5001:5001"
     depends_on:

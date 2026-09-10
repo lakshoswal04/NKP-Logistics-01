@@ -329,5 +329,14 @@ async def seed() -> None:
         print("Try tracking ID: NKP2026A1B2")
 
 
+async def seed_if_enabled() -> None:
+    """Entry point for boot-time seeding, gated on SEED_ON_START."""
+    from app.core.config import get_settings
+
+    if not get_settings().seed_on_start:
+        return
+    await seed()
+
+
 if __name__ == "__main__":
     asyncio.run(seed())
