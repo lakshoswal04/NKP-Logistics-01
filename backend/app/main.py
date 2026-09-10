@@ -47,6 +47,29 @@ app.include_router(support.router, prefix=API_V1)
 app.include_router(ai.router, prefix=API_V1)
 
 
+@app.get("/", tags=["meta"], include_in_schema=False)
+async def index():
+    """Service index.
+
+    An API with no route at "/" returns FastAPI's bare {"detail":"Not Found"},
+    which reads like a broken deployment to anyone who opens the base URL — so
+    this says what the service is and where to go instead.
+    """
+    return {
+        "service": settings.app_name,
+        "status": "ok",
+        "environment": settings.environment,
+        "docs": "/docs" if settings.debug else "disabled outside development",
+        "endpoints": {
+            "health": "/health",
+            "readiness": "/readyz",
+            "track a consignment": f"{API_V1}/tracking/{{tracking_id}}",
+            "api root": API_V1,
+        },
+        "web": settings.web_base_url,
+    }
+
+
 @app.get("/health", tags=["health"])
 async def health():
     """Liveness probe. Deliberately does not touch the database.
