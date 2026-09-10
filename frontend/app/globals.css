@@ -32,14 +32,20 @@
   --color-line-inverse: rgb(255 255 255 / 0.14);
   --color-line-inverse-strong: rgb(255 255 255 / 0.28);
 
-  /* Brand */
-  --color-brand: #e1252b;
-  --color-brand-hover: #b81419;
-  --color-brand-soft: #fdeced;
-  /* The brand red is only 4.33:1 on the near-black ground, which fails AA for
-     the small uppercase eyebrows that sit on it. This lifted tint reaches
-     4.92:1 and is used wherever the accent appears on a dark band. */
-  --color-brand-on-dark: #e83a40;
+  /* Accent.
+     Three values, not one, because this orange behaves the opposite way to the
+     red it replaces. Measured against WCAG AA:
+       #f48424 on white        2.57  FAIL -> never use as text on a light ground
+       #f48424 on near-black   7.86  PASS
+       black   on #f48424      7.23  PASS -> the accent band takes BLACK text
+       #b85a0f on white        4.66  PASS -> accent text on light grounds
+     Named `accent` rather than `brand` so every old call site has to be visited:
+     one value can no longer serve both grounds. */
+  --color-accent: #f48424;          /* fills, bands, pins, buttons */
+  --color-accent-ink: #b85a0f;      /* accent TEXT on light grounds */
+  --color-accent-on-dark: #f48424;  /* accent TEXT on dark grounds */
+  --color-accent-hover: #d96f14;
+  --color-accent-soft: #fef1e4;
 
   /* Status */
   --color-success: #137a3f;
@@ -80,8 +86,8 @@
    The previous scrim was weighted left, for a side-set headline. */
 @utility cine-scrim {
   background:
-    linear-gradient(180deg, rgb(5 7 6 / 0.72) 0%, rgb(5 7 6 / 0.34) 26%, rgb(5 7 6 / 0.58) 62%, rgb(5 7 6 / 0.94) 100%),
-    linear-gradient(90deg, rgb(5 7 6 / 0.94) 0%, rgb(5 7 6 / 0.74) 34%, rgb(5 7 6 / 0.40) 64%, rgb(5 7 6 / 0.24) 100%);
+    linear-gradient(180deg, rgb(5 7 6 / 0.66) 0%, rgb(5 7 6 / 0.22) 26%, rgb(5 7 6 / 0.50) 62%, rgb(5 7 6 / 0.92) 100%),
+    linear-gradient(90deg, rgb(5 7 6 / 0.92) 0%, rgb(5 7 6 / 0.66) 32%, rgb(5 7 6 / 0.26) 62%, rgb(5 7 6 / 0.08) 100%);
 }
 
 /* Lighter variant for interior page heroes, which carry less text. */
@@ -122,29 +128,6 @@
   font-weight: 600;
 }
 
-/* Small solid accent square used between inline chips. */
-@utility chip-sep {
-  display: inline-block;
-  width: 0.4rem;
-  height: 0.4rem;
-  border-radius: 1px;
-  background: var(--color-brand);
-  vertical-align: middle;
-}
-
-/* Optional short rule under a heading — no longer the default device. */
-@utility rule-red {
-  &::after {
-    content: "";
-    display: block;
-    width: 3.5rem;
-    height: 3px;
-    border-radius: 2px;
-    margin-top: 1.25rem;
-    background: var(--color-brand);
-  }
-}
-
 /* ---------------------------------------------------------------------------
    Base
    --------------------------------------------------------------------------- */
@@ -172,14 +155,14 @@ p {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-brand);
+  outline: 2px solid var(--color-accent);
   outline-offset: 3px;
   border-radius: var(--radius-xs);
 }
 
 ::selection {
-  background: var(--color-brand);
-  color: var(--color-paper);
+  background: var(--color-accent);
+  color: var(--color-ink);
 }
 
 /* ---------------------------------------------------------------------------

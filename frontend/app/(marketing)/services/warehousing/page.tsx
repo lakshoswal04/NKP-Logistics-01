@@ -35,7 +35,7 @@ export default function WarehousingPage() {
           <div className="relative mx-auto flex min-h-[420px] max-w-[1200px] items-center px-6 lg:min-h-[480px]">
             <div className="max-w-[560px] py-16 animate-fade-up">
               <h1 className="font-display text-[32px] font-semibold leading-[1.14] text-white sm:text-[42px] lg:text-[48px]">
-                <span className="font-bold text-brand">Stock closer</span> to your customers
+                <span className="font-bold text-accent-on-dark">Stock closer</span> to your customers
               </h1>
               <p className="mt-5 max-w-[470px] text-[16px] leading-relaxed text-white/80">
                 A distributed fulfilment network that shortens the delivery radius, absorbs your
@@ -54,7 +54,7 @@ export default function WarehousingPage() {
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <Reveal>
             <div>
-              <SectionHeading lead="End-to-end warehousing and" strong="distribution logistics" />
+              <SectionHeading title="End-to-end warehousing and distribution logistics" />
               <div className="mt-6 flex max-w-[500px] flex-col gap-4 text-[15px] leading-relaxed text-ink-2">
                 <p>
                   Our fulfilment centres run on a single warehouse management system and sit on
@@ -84,14 +84,14 @@ export default function WarehousingPage() {
       {/* Advantage 2x2 on dark */}
       <Section tone="ink" id="advantage">
         <div className="grid gap-12 lg:grid-cols-[280px_1fr]">
-          <SectionHeading lead="The NKP" strong="Advantage" inverse />
+          <SectionHeading title="The NKP Advantage" inverse />
           <div className="grid gap-x-12 gap-y-10 sm:grid-cols-2">
             {ADVANTAGES.map((advantage, index) => {
               const Icon = ADVANTAGE_ICONS[index % ADVANTAGE_ICONS.length];
               return (
               <Reveal key={advantage.title} delay={index * 0.05}>
                 <div>
-                  <Icon className="text-brand" />
+                  <Icon className="text-accent-on-dark" />
                   <h3 className="mt-5 max-w-[300px] font-display text-[17px] font-bold leading-snug text-white">
                     {advantage.title}
                   </h3>
@@ -108,12 +108,12 @@ export default function WarehousingPage() {
 
       {/* How fulfilment works */}
       <Section tone="mist" id="fulfilment">
-        <SectionHeading lead="How our" strong="order fulfilment actually works" />
+        <SectionHeading title="How our order fulfilment actually works" />
         <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {FULFILMENT_STEPS.map((step, index) => (
             <Reveal key={step.title} delay={index * 0.05}>
               <article className="flex h-full flex-col border-t-2 border-ink pt-5">
-                <span className="font-display text-[13px] font-bold text-brand">
+                <span className="font-display text-[13px] font-bold text-accent-ink">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <h3 className="mt-2 font-display text-[17px] font-bold text-ink">{step.title}</h3>
@@ -126,12 +126,12 @@ export default function WarehousingPage() {
 
       {/* Who it's for */}
       <Section tone="paper" id="solutions">
-        <SectionHeading lead="Solutions for" strong="how you sell" />
+        <SectionHeading title="Solutions for how you sell" />
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {SOLUTIONS.map((solution, index) => (
             <Reveal key={solution.slug} delay={index * 0.05}>
               <article className="flex h-full flex-col border border-line p-7 transition-colors hover:border-ink">
-                <span className="block h-[3px] w-10 bg-brand" aria-hidden />
+                <span className="block h-[3px] w-10 bg-accent" aria-hidden />
                 <h3 className="mt-5 font-display text-[19px] font-bold text-ink">
                   {solution.title}
                 </h3>
@@ -144,7 +144,7 @@ export default function WarehousingPage() {
 
       {/* Case studies */}
       <Section tone="mist">
-        <SectionHeading strong="Case studies" />
+        <SectionHeading title="Case studies" />
         <div className="mt-12 flex flex-col gap-16">
           {CASE_STUDIES.map((study, index) => (
             <Reveal key={study.title} delay={0.04}>
@@ -195,8 +195,7 @@ export default function WarehousingPage() {
           <div>
             <Eyebrow>Enquire</Eyebrow>
             <SectionHeading
-              lead="Need a flexible, end-to-end"
-              strong="warehousing solution?"
+              title="Need a flexible, end-to-end warehousing solution?"
             />
             <p className="mt-6 max-w-[440px] text-[15px] leading-relaxed text-ink-2">
               Tell us where your customers are and roughly what you ship. We will come back with a
@@ -210,7 +209,7 @@ export default function WarehousingPage() {
                 "No obligation and no lock-in on the first term",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3 text-[14px] text-ink-2">
-                  <span className="mt-[7px] h-1.5 w-1.5 shrink-0 bg-brand" aria-hidden />
+                  <span className="mt-[7px] h-1.5 w-1.5 shrink-0 bg-accent" aria-hidden />
                   {item}
                 </li>
               ))}
@@ -221,8 +220,7 @@ export default function WarehousingPage() {
       </Section>
 
       <CtaBand
-        lead="Every day stock sits in the wrong city is"
-        strong="a delivery promise you cannot make"
+        title="Every day stock sits in the wrong city is a delivery promise you cannot make"
         primaryLabel="Request a proposal"
         secondaryLabel="Track a consignment"
         secondaryHref="/track"

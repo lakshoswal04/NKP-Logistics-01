@@ -7,6 +7,7 @@ hotlinked so the site builds and renders without network access.
 
 | File | Source |
 |---|---|
+| hero-dock.jpg | pexels.com/photo/34968619 |
 | hero-aisle-cinematic.jpg | pexels.com/photo/4483775 |
 | hero-racking.jpg | pexels.com/photo/12706241 |
 | ops-trolley.jpg | pexels.com/photo/1797428 |

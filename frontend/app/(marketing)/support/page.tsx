@@ -29,7 +29,7 @@ export default function SupportPage() {
       <Section tone="mist" id="raise">
         <div className="grid gap-10 lg:grid-cols-[1fr_600px]">
           <div>
-            <SectionHeading lead="Still stuck?" strong="Raise a query" />
+            <SectionHeading title="Still stuck? Raise a query" />
             <p className="mt-6 max-w-[380px] text-[15px] leading-relaxed text-ink-2">
               Tell us what happened and we&rsquo;ll pick it up. Include an AWB or invoice number
               where you have one — it saves a round trip.
@@ -39,13 +39,13 @@ export default function SupportPage() {
               <div>
                 <dt className="eyebrow">Support desk</dt>
                 <dd className="mt-1.5 text-[14px] text-ink-2">
-                  <a href={`mailto:${COMPANY.supportEmail}`} className="hover:text-brand">
+                  <a href={`mailto:${COMPANY.supportEmail}`} className="hover:text-accent-ink">
                     {COMPANY.supportEmail}
                   </a>
                   <br />
                   <a
                     href={`tel:${COMPANY.supportPhone.replace(/\s/g, "")}`}
-                    className="hover:text-brand"
+                    className="hover:text-accent-ink"
                   >
                     {COMPANY.supportPhone}
                   </a>
@@ -61,7 +61,7 @@ export default function SupportPage() {
 
             <div
               id="fraud"
-              className="mt-9 border-l-2 border-brand bg-brand-soft p-5"
+              className="mt-9 border-l-2 border-accent bg-accent-soft p-5"
             >
               <h3 className="text-[13.5px] font-bold text-ink">Fraud advisory</h3>
               <p className="mt-2 text-[13px] leading-relaxed text-ink-2">

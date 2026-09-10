@@ -22,7 +22,7 @@ _env = Environment(autoescape=True, undefined=StrictUndefined, trim_blocks=True,
 _env.filters["inr"] = format_inr
 
 INK = "#101014"
-BRAND = "#E1252B"
+BRAND = "#F48424"
 MUTED = "#7A7A88"
 MIST = "#F4F5F7"
 LINE = "#E3E3E8"

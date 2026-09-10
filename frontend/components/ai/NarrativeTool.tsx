@@ -101,7 +101,7 @@ export function NarrativeTool({ index }: { index: number }) {
                   );
                   setCopied(true);
                 }}
-                className="text-[11.5px] font-semibold text-brand hover:text-brand-hover"
+                className="text-[11.5px] font-semibold text-accent-ink hover:text-accent-hover"
               >
                 {copied ? "Copied" : "Copy"}
               </button>

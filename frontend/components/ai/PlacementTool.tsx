@@ -81,7 +81,7 @@ export function PlacementTool({ index }: { index: number }) {
           <button
             type="button"
             onClick={() => setRows((prev) => [...prev, { city: "", orders: 0 }])}
-            className="text-[12.5px] font-semibold text-brand hover:text-brand-hover"
+            className="text-[12.5px] font-semibold text-accent-ink hover:text-accent-hover"
           >
             + Add a city
           </button>
@@ -110,7 +110,7 @@ export function PlacementTool({ index }: { index: number }) {
                 </div>
                 <div className="mt-1.5 h-2.5 w-full bg-mist">
                   <div
-                    className="h-full bg-brand transition-all duration-500"
+                    className="h-full bg-accent transition-all duration-500"
                     style={{ width: `${Math.min(pick.share_pct, 100)}%` }}
                   />
                 </div>

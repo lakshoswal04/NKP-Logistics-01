@@ -21,7 +21,7 @@ export function TrackingTimeline({ events }: { events: TrackingEvent[] }) {
         <li key={`${event.occurred_at}-${index}`} className="relative flex gap-4 pl-6">
           <span
             className={`absolute left-0 top-[5px] h-[11px] w-[11px] rounded-full ${
-              DOT[event.status] ?? (index === 0 ? "bg-brand" : "bg-ink-3")
+              DOT[event.status] ?? (index === 0 ? "bg-accent" : "bg-ink-3")
             }`}
             aria-hidden
           />

@@ -2,17 +2,17 @@ import type { ReactNode } from "react";
 
 import { cn } from "@/lib/cn";
 
-type Tone = "paper" | "mist" | "ink" | "void" | "brand";
+type Tone = "paper" | "mist" | "ink" | "void" | "accent";
 
 const TONES: Record<Tone, string> = {
   paper: "bg-paper text-ink",
   mist: "bg-mist text-ink",
   ink: "bg-ink text-ink-inverse",
   void: "bg-void text-ink-inverse",
-  // White on the accent, not black. The reference uses black on orange, but
-  // orange is far lighter: black on OUR red measures 3.98:1, which fails AA for
-  // body copy. White measures 4.67:1 and passes at both sizes.
-  brand: "bg-brand text-paper",
+  // Black on the accent, as the reference does. Measured: black on this orange
+  // is 7.23:1, white is 2.57:1 and fails. (The red this replaced was the other
+  // way round, which is why the band's text colour flips with the accent.)
+  accent: "bg-accent text-ink",
 };
 
 /**
@@ -44,36 +44,32 @@ export function Section({
 /**
  * Section heading.
  *
- * `lead` renders in normal weight and `strong` in bold. The red rule underneath
- * is now opt-in (`rule`) — the reference sets an eyebrow above the heading
- * instead, and using both reads as clutter.
+ * One weight, one colour, set large. The previous two-weight treatment (a light
+ * phrase followed by a bold one) and the short rule beneath were both lifted
+ * from a different design language and were the main reason the page kept
+ * reading as that brand. An `Eyebrow` above the heading now carries the label.
  */
 export function SectionHeading({
-  lead,
-  strong,
+  title,
   inverse = false,
-  rule = false,
   className,
   as: Tag = "h2",
 }: {
-  lead?: string;
-  strong: string;
+  title: string;
   inverse?: boolean;
-  rule?: boolean;
   className?: string;
   as?: "h1" | "h2" | "h3";
 }) {
   return (
     <Tag
       className={cn(
-        "text-[34px] leading-[1.05] sm:text-[44px] lg:text-[52px]",
-        rule && "rule-red",
+        "max-w-[18ch] text-[34px] font-bold leading-[1.02] tracking-[-0.035em]",
+        "sm:text-[44px] lg:text-[54px]",
         inverse ? "text-ink-inverse" : "text-ink",
         className,
       )}
     >
-      {lead ? <span className="font-normal opacity-70">{lead} </span> : null}
-      <span className="font-bold">{strong}</span>
+      {title}
     </Tag>
   );
 }
@@ -81,17 +77,17 @@ export function SectionHeading({
 export function Eyebrow({
   children,
   className,
-  tone = "brand",
+  tone = "accent",
 }: {
   children: ReactNode;
   className?: string;
-  tone?: "brand" | "muted" | "inverse";
+  tone?: "accent" | "muted" | "inverse";
 }) {
   return (
     <p
       className={cn(
         "eyebrow mb-5",
-        tone === "brand" && "text-brand",
+        tone === "accent" && "text-accent-ink",
         tone === "muted" && "text-ink-3",
         tone === "inverse" && "text-ink-inverse-3",
         className,

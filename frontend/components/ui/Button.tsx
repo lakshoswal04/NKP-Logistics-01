@@ -3,7 +3,7 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
 import { cn } from "@/lib/cn";
 
-type Variant = "light" | "dark" | "brand" | "outline" | "outline-inverse" | "ghost";
+type Variant = "light" | "dark" | "accent" | "outline" | "outline-inverse" | "ghost";
 type Size = "sm" | "md" | "lg";
 
 const VARIANTS: Record<Variant, string> = {
@@ -11,11 +11,12 @@ const VARIANTS: Record<Variant, string> = {
   light: "bg-paper text-ink hover:bg-mist",
   // Black pill on a light ground — the same component inverted.
   dark: "bg-ink text-paper hover:bg-void",
-  brand: "bg-brand text-paper hover:bg-brand-hover",
+  // Black on orange, not white — see the contrast note in Section.tsx.
+  accent: "bg-accent text-ink hover:bg-accent-hover",
   outline: "border border-line-strong text-ink hover:border-ink hover:bg-ink hover:text-paper",
   "outline-inverse":
     "border border-line-inverse-strong text-paper hover:border-paper hover:bg-paper hover:text-ink",
-  ghost: "text-ink hover:text-brand",
+  ghost: "text-ink hover:text-accent-ink",
 };
 
 const SIZES: Record<Size, string> = {
@@ -35,7 +36,7 @@ const BADGE_SIZES: Record<Size, string> = {
 const BADGE_TONE: Record<Variant, string> = {
   light: "bg-ink text-paper",
   dark: "bg-paper text-ink",
-  brand: "bg-paper text-brand",
+  accent: "bg-ink text-accent-on-dark",
   outline: "bg-ink text-paper",
   "outline-inverse": "bg-paper text-ink",
   ghost: "bg-ink text-paper",
@@ -62,7 +63,7 @@ type Props = {
  * rest of the visual direction.)
  */
 export function Button({
-  variant = "brand",
+  variant = "dark",
   size = "md",
   href,
   withBadge = false,
@@ -140,21 +141,21 @@ export function ArrowLink({
   href,
   children,
   className,
-  tone = "brand",
+  tone = "accent",
 }: {
   href: string;
   children: ReactNode;
   className?: string;
-  tone?: "brand" | "ink" | "inverse";
+  tone?: "accent" | "ink" | "inverse";
 }) {
   return (
     <Link
       href={href}
       className={cn(
         "group/link inline-flex items-center gap-2 text-[13px] font-semibold transition-colors",
-        tone === "brand" && "text-brand hover:text-brand-hover",
-        tone === "ink" && "text-ink hover:text-brand",
-        tone === "inverse" && "text-paper hover:text-brand",
+        tone === "accent" && "text-accent-ink hover:text-accent-hover",
+        tone === "ink" && "text-ink hover:text-accent-ink",
+        tone === "inverse" && "text-paper hover:text-accent-ink",
         className,
       )}
     >

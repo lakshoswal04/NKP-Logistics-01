@@ -139,7 +139,7 @@ export function Copilot({ suggestions }: { suggestions: string[] }) {
                 </p>
               )}
               {turn.streaming && turn.text && (
-                <span className="ml-0.5 inline-block h-4 w-[2px] animate-pulse bg-brand align-middle" />
+                <span className="ml-0.5 inline-block h-4 w-[2px] animate-pulse bg-accent align-middle" />
               )}
             </div>
           ),

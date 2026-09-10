@@ -69,7 +69,7 @@ export function TrackingView() {
         <button
           type="submit"
           disabled={!input.trim()}
-          className="bg-ink px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand disabled:opacity-40"
+          className="bg-ink px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent disabled:opacity-40"
         >
           Track
         </button>
@@ -83,7 +83,7 @@ export function TrackingView() {
             <button
               type="button"
               onClick={() => router.push("/track?id=NKP2026A1B2")}
-              className="font-semibold text-brand underline underline-offset-2"
+              className="font-semibold text-accent-ink underline underline-offset-2"
             >
               NKP2026A1B2
             </button>{" "}
@@ -104,7 +104,7 @@ export function TrackingView() {
           <p className="mt-2 max-w-[520px] text-[14px] leading-relaxed text-ink-2">
             We have nothing against <span className="font-semibold">{trackingId}</span>. References
             can take a few hours to appear after dispatch. If it still shows nothing tomorrow,{" "}
-            <a href="/support#raise" className="font-semibold text-brand underline underline-offset-2">
+            <a href="/support#raise" className="font-semibold text-accent-ink underline underline-offset-2">
               raise a query
             </a>{" "}
             and we will trace it.

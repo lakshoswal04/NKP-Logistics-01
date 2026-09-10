@@ -18,7 +18,7 @@ export function AlertTicker() {
             aria-hidden={copy === 1 || undefined}
           >
             <li className="flex items-center py-2 pl-6 pr-3">
-              <span className="eyebrow text-brand-on-dark">Advisory</span>
+              <span className="eyebrow text-accent-on-dark">Advisory</span>
             </li>
             {ALERTS.map((alert) => (
               <li key={alert} className="flex items-center gap-4 py-2 pr-4">

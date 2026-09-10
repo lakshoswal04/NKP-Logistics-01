@@ -52,7 +52,7 @@ def _register_fonts() -> None:
 
 
 INK = colors.HexColor("#101014")
-BRAND = colors.HexColor("#E1252B")
+BRAND = colors.HexColor("#F48424")
 MIST = colors.HexColor("#F4F5F7")
 MUTED = colors.HexColor("#7A7A88")
 LINE = colors.HexColor("#DDDDE3")
@@ -190,7 +190,7 @@ def render_invoice_pdf(invoice: Invoice) -> bytes:
     heading = "TAX INVOICE" if not is_draft else "PROFORMA / DRAFT"
     masthead = Table(
         [[
-            Paragraph('<font color="#E1252B">NKP</font> LOGISTICS', st["h1"]),
+            Paragraph('<font color="#B85A0F">NKP</font> LOGISTICS', st["h1"]),
             Paragraph(
                 f'<font size="13"><b>{heading}</b></font><br/>'
                 f'<font size="8" color="#7A7A88">{invoice.number}</font>',

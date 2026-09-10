@@ -23,8 +23,7 @@ export default function AiPage() {
       <ControlTower />
 
       <CtaBand
-        lead="Want this pointed at"
-        strong="your own inventory?"
+        title="Want this pointed at your own inventory?"
         text="The control tower ships with every NKP account. Tell us what you shift and we will show you it running against your data."
         primaryLabel="Talk to our team"
         secondaryLabel="Explore warehousing"

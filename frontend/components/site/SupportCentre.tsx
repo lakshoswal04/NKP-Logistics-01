@@ -58,7 +58,7 @@ export function SupportCentre() {
                   )}
                 >
                   <span
-                    className={cn("h-2.5 w-2.5 shrink-0", active ? "bg-brand" : "bg-line-strong")}
+                    className={cn("h-2.5 w-2.5 shrink-0", active ? "bg-accent" : "bg-line-strong")}
                     aria-hidden
                   />
                   {category.title}
@@ -115,12 +115,12 @@ export function SupportCentre() {
                           aria-expanded={open}
                           className="flex w-full items-start justify-between gap-4 p-4 text-left"
                         >
-                          <span className="border-l-2 border-brand pl-3 text-[14.5px] font-semibold text-ink">
+                          <span className="border-l-2 border-accent pl-3 text-[14.5px] font-semibold text-ink">
                             {topic.q}
                           </span>
                           <span
                             className={cn(
-                              "shrink-0 text-[19px] font-normal leading-none text-brand transition-transform",
+                              "shrink-0 text-[19px] font-normal leading-none text-accent-ink transition-transform",
                               open && "rotate-45",
                             )}
                             aria-hidden

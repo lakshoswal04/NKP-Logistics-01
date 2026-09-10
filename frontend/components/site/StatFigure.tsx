@@ -28,7 +28,7 @@ export function StatFigure({
       <span
         ref={ref}
         className={cn(
-          "block font-display text-[34px] font-bold leading-none tabular-nums lg:text-[42px]",
+          "block font-display text-[40px] font-bold leading-none tabular-nums lg:text-[52px]",
           inverse ? "text-ink-inverse" : "text-ink",
         )}
       >
@@ -36,7 +36,7 @@ export function StatFigure({
       </span>
       <span
         className={cn(
-          "mt-3 block max-w-[190px] text-[12.5px] leading-relaxed",
+          "mt-3 block max-w-[24ch] text-[13.5px] leading-relaxed",
           inverse ? "text-ink-inverse-2" : "text-ink-2",
         )}
       >

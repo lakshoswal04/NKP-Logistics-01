@@ -41,7 +41,7 @@ export function TrackWidget({ className }: { className?: string }) {
       <div className="flex items-center gap-6 border-b border-line pb-3">
         <span className="relative pb-3 text-[15px] font-bold text-ink">
           Track order
-          <span className="absolute inset-x-0 -bottom-[13px] h-[2.5px] rounded-full bg-brand" aria-hidden />
+          <span className="absolute inset-x-0 -bottom-[13px] h-[2.5px] rounded-full bg-accent" aria-hidden />
         </span>
         <a
           href="/contact"
@@ -101,7 +101,7 @@ export function TrackWidget({ className }: { className?: string }) {
 
         <button
           type="submit"
-          className="mt-3 w-full rounded-pill bg-ink py-3.5 text-sm font-semibold text-paper transition-colors hover:bg-brand disabled:opacity-40"
+          className="mt-3 w-full rounded-pill bg-ink py-3.5 text-sm font-semibold text-paper transition-colors hover:bg-accent disabled:opacity-40"
           disabled={!value.trim()}
         >
           Track

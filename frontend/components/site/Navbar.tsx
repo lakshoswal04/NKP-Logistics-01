@@ -70,7 +70,7 @@ export function Navbar() {
                 >
                   {link.label}
                   {active && (
-                    <span className="absolute inset-x-0 -bottom-1 h-0.5 rounded-full bg-brand" aria-hidden />
+                    <span className="absolute inset-x-0 -bottom-1 h-0.5 rounded-full bg-accent" aria-hidden />
                   )}
                 </Link>
               </li>
@@ -160,7 +160,7 @@ export function Navbar() {
           <Link
             href="/contact"
             onClick={close}
-            className="mt-3 block rounded-pill bg-brand px-5 py-3 text-center text-sm font-semibold text-paper"
+            className="mt-3 block rounded-pill bg-accent px-5 py-3 text-center text-sm font-semibold text-paper"
           >
             Get a quote
           </Link>

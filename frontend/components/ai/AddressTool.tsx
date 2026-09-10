@@ -105,7 +105,7 @@ export function AddressTool({ index }: { index: number }) {
             <ul className="flex flex-col gap-2">
               {result.issues.map((issue) => (
                 <li key={issue} className="flex items-start gap-2.5 text-[13px] leading-relaxed text-ink-2">
-                  <span className="mt-[6px] h-1.5 w-1.5 shrink-0 bg-brand" aria-hidden />
+                  <span className="mt-[6px] h-1.5 w-1.5 shrink-0 bg-accent" aria-hidden />
                   {issue}
                 </li>
               ))}

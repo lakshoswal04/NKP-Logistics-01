@@ -26,7 +26,7 @@ export function Footer() {
             <div className="flex items-center gap-3">
               <LogoMark size={38} />
               <span className="font-display text-[18px] font-bold uppercase tracking-[0.04em]">
-                <span className="text-brand">NKP</span> Logistics
+                <span className="text-accent-on-dark">NKP</span> Logistics
               </span>
             </div>
             <p className="mt-6 max-w-[380px] text-[14px] leading-relaxed text-ink-inverse-2">
@@ -55,7 +55,7 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="eyebrow mb-6 text-brand-on-dark">Our network</p>
+            <p className="eyebrow mb-6 text-accent-on-dark">Our network</p>
             <NetworkMap className="mx-auto max-w-[380px]" />
           </div>
         </div>
@@ -69,7 +69,7 @@ export function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-[13.5px] text-ink-inverse-2 transition-colors hover:text-brand"
+                      className="text-[13.5px] text-ink-inverse-2 transition-colors hover:text-accent-on-dark"
                     >
                       {link.label}
                     </Link>
@@ -91,11 +91,11 @@ export function Footer() {
           <div className="text-[11.5px] leading-relaxed text-ink-inverse-3 sm:text-right">
             <p>{COMPANY.hq}</p>
             <p>
-              <a href={`tel:${COMPANY.phone.replace(/\s/g, "")}`} className="hover:text-brand">
+              <a href={`tel:${COMPANY.phone.replace(/\s/g, "")}`} className="hover:text-accent-on-dark">
                 {COMPANY.phone}
               </a>{" "}
               ·{" "}
-              <a href={`mailto:${COMPANY.email}`} className="hover:text-brand">
+              <a href={`mailto:${COMPANY.email}`} className="hover:text-accent-on-dark">
                 {COMPANY.email}
               </a>
             </p>

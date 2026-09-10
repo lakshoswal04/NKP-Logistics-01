@@ -26,7 +26,7 @@ export function ModuleCard({
       <header className="border-b border-line p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <span className="font-display text-[12px] font-bold text-brand">
+            <span className="font-display text-[12px] font-bold text-accent-ink">
               {String(index).padStart(2, "0")}
             </span>
             <h3 className="mt-1 font-display text-[19px] font-bold text-ink">{title}</h3>

@@ -29,10 +29,18 @@ export const ALERTS = [
   "Invoices are sent only from billing@nkplogistics.in with a signed PDF attached",
 ] as const;
 
+/** Three, widely spaced — five compressed into a dense row, which was part of
+ *  what made the hero feel crowded. The other two figures still appear on the
+ *  warehousing page, where there is room for them. */
 export const STATS = [
   { value: "7.4 Mn+", label: "Sq ft of warehousing under management" },
   { value: "42", label: "Fulfilment centres across 14 states" },
   { value: "19,100+", label: "Serviceable delivery pin codes" },
+] as const;
+
+/** The fuller set, used where the layout can carry it. */
+export const STATS_EXTENDED = [
+  ...STATS,
   { value: "1,850+", label: "Brands fulfilled every month" },
   { value: "99.4%", label: "Inventory accuracy at cycle count" },
 ] as const;

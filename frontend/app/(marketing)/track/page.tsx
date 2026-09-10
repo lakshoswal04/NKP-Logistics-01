@@ -30,7 +30,7 @@ export default function TrackPage() {
       </Section>
 
       <Section tone="mist">
-        <SectionHeading strong="Frequently asked" />
+        <SectionHeading title="Frequently asked" />
         <div className="mt-10 grid max-w-[900px] gap-3">
           {TRACK_FAQS.map((faq) => (
             <details
@@ -40,7 +40,7 @@ export default function TrackPage() {
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 text-[14.5px] font-semibold text-ink">
                 {faq.q}
                 <span
-                  className="shrink-0 text-[20px] font-normal text-brand transition-transform group-open:rotate-45"
+                  className="shrink-0 text-[20px] font-normal text-accent-ink transition-transform group-open:rotate-45"
                   aria-hidden
                 >
                   +

@@ -32,7 +32,7 @@ export function OffsetFigure({
         />
       </div>
       <div
-        className="absolute -bottom-4 -left-4 hidden size-20 rounded-lg bg-brand lg:block"
+        className="absolute -bottom-4 -left-4 hidden size-20 rounded-lg bg-accent lg:block"
         aria-hidden
       />
     </div>

@@ -1,10 +1,10 @@
 import Image from "next/image";
 import type { Metadata } from "next";
 
-import { AlertTicker } from "@/components/site/AlertTicker";
 import { CtaBand } from "@/components/site/CtaBand";
 import { HomeHero } from "@/components/site/HomeHero";
 import { OffsetFigure } from "@/components/site/OffsetFigure";
+import { TrackBar } from "@/components/site/TrackBar";
 import { ArrowLink, Button } from "@/components/ui/Button";
 import { Eyebrow, Section, SectionHeading } from "@/components/ui/Section";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
@@ -22,14 +22,13 @@ export default function HomePage() {
   return (
     <>
       <HomeHero />
-      <AlertTicker />
 
       {/* Who we build for */}
       <Section tone="paper" id="solutions">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-20">
           <div>
             <Eyebrow>Who we build for</Eyebrow>
-            <SectionHeading lead="Built for the way" strong="Indian commerce actually ships" />
+            <SectionHeading title="Built for the way Indian commerce actually ships" />
           </div>
           <RevealGroup className="flex flex-col gap-10 pt-2" gap={0.08}>
             {SOLUTIONS.map((solution) => (
@@ -49,11 +48,15 @@ export default function HomePage() {
         </div>
       </Section>
 
+      <Section tone="paper" className="!pt-0">
+        <TrackBar />
+      </Section>
+
       {/* Capability cards */}
       <Section tone="mist">
         <div className="max-w-[640px]">
           <Eyebrow>Inside the fulfilment centre</Eyebrow>
-          <SectionHeading lead="Warehousing is the whole business," strong="not a line item" />
+          <SectionHeading title="Warehousing is the whole business, not a line item" />
           <p className="mt-6 text-[15px] leading-relaxed text-ink-2">
             Every capability below runs on our own floor, under one warehouse management system.
           </p>
@@ -95,7 +98,7 @@ export default function HomePage() {
           <Reveal>
             <div>
               <Eyebrow>AI Control Tower</Eyebrow>
-              <SectionHeading lead="Ask your warehouse a question," strong="get a real answer" />
+              <SectionHeading title="Ask your warehouse a question, get a real answer" />
               <p className="mt-6 max-w-[500px] text-[15px] leading-relaxed text-ink-2">
                 Not a chatbot bolted onto a marketing site. The control tower reads your live stock,
                 invoices and consignments, scores a messy delivery address before it becomes an RTO,
@@ -109,7 +112,7 @@ export default function HomePage() {
                   "Support triage grounded in the knowledge base",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3 text-[14px] text-ink-2">
-                    <span className="mt-[7px] size-1.5 shrink-0 rounded-full bg-brand" aria-hidden />
+                    <span className="mt-[7px] size-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
                     {item}
                   </li>
                 ))}
@@ -130,7 +133,7 @@ export default function HomePage() {
       </Section>
 
       {/* Angled accent band */}
-      <Section tone="brand" className="corner-cut" innerClassName="text-center">
+      <Section tone="accent" className="corner-cut" innerClassName="text-center">
         <Reveal>
           <p className="eyebrow mb-6 text-paper/80">Why it matters</p>
           <h2 className="mx-auto max-w-[860px] font-display text-[32px] font-bold leading-[1.06] tracking-[-0.03em] text-paper sm:text-[42px] lg:text-[50px]">

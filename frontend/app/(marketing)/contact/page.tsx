@@ -25,7 +25,7 @@ export default function ContactPage() {
       <Section tone="paper">
         <div className="grid gap-12 lg:grid-cols-[1fr_460px]">
           <div>
-            <SectionHeading lead="Reach the" strong="right desk first time" />
+            <SectionHeading title="Reach the right desk first time" />
 
             <dl className="mt-10 grid gap-8 sm:grid-cols-2">
               {[
@@ -59,7 +59,7 @@ export default function ContactPage() {
                   <dd className="mt-2">
                     <a
                       href={item.href}
-                      className="text-[15px] font-semibold text-ink transition-colors hover:text-brand"
+                      className="text-[15px] font-semibold text-ink transition-colors hover:text-accent-ink"
                     >
                       {item.value}
                     </a>
@@ -74,7 +74,7 @@ export default function ContactPage() {
               {OFFICES.map((office, index) => (
                 <Reveal key={office.city} delay={index * 0.05}>
                   <address className="h-full border border-line p-5 not-italic">
-                    <span className="block h-[3px] w-8 bg-brand" aria-hidden />
+                    <span className="block h-[3px] w-8 bg-accent" aria-hidden />
                     <p className="mt-4 font-display text-[15px] font-bold text-ink">
                       {office.city}
                     </p>
@@ -86,7 +86,7 @@ export default function ContactPage() {
                     </p>
                     <a
                       href={`tel:${office.phone.replace(/\s/g, "")}`}
-                      className="mt-2 inline-block text-[12.5px] text-ink-2 hover:text-brand"
+                      className="mt-2 inline-block text-[12.5px] text-ink-2 hover:text-accent-ink"
                     >
                       {office.phone}
                     </a>

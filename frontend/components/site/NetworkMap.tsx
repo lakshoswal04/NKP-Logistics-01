@@ -53,8 +53,8 @@ export function NetworkMap({ className }: { className?: string }) {
             <path d={OUTLINE} />
           </clipPath>
           <radialGradient id="pin-glow">
-            <stop offset="0%" stopColor="var(--color-brand)" stopOpacity="0.55" />
-            <stop offset="100%" stopColor="var(--color-brand)" stopOpacity="0" />
+            <stop offset="0%" stopColor="var(--color-accent)" stopOpacity="0.55" />
+            <stop offset="100%" stopColor="var(--color-accent)" stopOpacity="0" />
           </radialGradient>
         </defs>
 
@@ -74,10 +74,10 @@ export function NetworkMap({ className }: { className?: string }) {
         {FCS.map((fc, i) => (
           <g key={fc.name}>
             <circle cx={fc.x} cy={fc.y} r="5" fill="url(#pin-glow)" />
-            <circle cx={fc.x} cy={fc.y} r="1.5" fill="var(--color-brand)" />
+            <circle cx={fc.x} cy={fc.y} r="1.5" fill="var(--color-accent)" />
             {!reduced && (
               <circle cx={fc.x} cy={fc.y} r="1.5" fill="none"
-                      stroke="var(--color-brand)" strokeWidth="0.5" opacity="0.8">
+                      stroke="var(--color-accent)" strokeWidth="0.5" opacity="0.8">
                 <animate attributeName="r" values="1.5;5.5" dur="2.8s"
                          begin={`${i * 0.55}s`} repeatCount="indefinite" />
                 <animate attributeName="opacity" values="0.8;0" dur="2.8s"

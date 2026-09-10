@@ -16,7 +16,7 @@ export default function LoginPage() {
       <Link href="/" className="mb-8 flex items-center gap-3">
         <LogoMark size={34} />
         <span className="font-display text-[17px] font-bold uppercase tracking-[0.04em] text-ink">
-          <span className="text-brand">NKP</span> Logistics
+          <span className="text-accent-ink">NKP</span> Logistics
         </span>
       </Link>
 
@@ -26,7 +26,7 @@ export default function LoginPage() {
         </Suspense>
       </div>
 
-      <Link href="/" className="mt-8 text-[12.5px] text-ink-3 transition-colors hover:text-brand">
+      <Link href="/" className="mt-8 text-[12.5px] text-ink-3 transition-colors hover:text-accent-ink">
         ← Back to the site
       </Link>
     </main>

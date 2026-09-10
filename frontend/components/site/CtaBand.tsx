@@ -1,16 +1,14 @@
 import { Button } from "@/components/ui/Button";
 
 export function CtaBand({
-  lead = "Ready to stop guessing where your",
-  strong = "stock actually is?",
+  title = "Ready to stop guessing where your stock actually is?",
   text = "Tell us your SKU count, order volume and where your customers are. We will model the fulfilment-centre split and come back with a costed proposal.",
   primaryLabel = "Talk to our team",
   primaryHref = "/contact",
   secondaryLabel = "Explore warehousing",
   secondaryHref = "/services/warehousing",
 }: {
-  lead?: string;
-  strong?: string;
+  title?: string;
   text?: string;
   primaryLabel?: string;
   primaryHref?: string;
@@ -20,9 +18,8 @@ export function CtaBand({
   return (
     <section className="bg-void py-band lg:py-band-lg">
       <div className="mx-auto max-w-[1240px] px-6 text-center">
-        <h2 className="mx-auto max-w-[820px] font-display text-[32px] leading-[1.06] tracking-[-0.03em] text-ink-inverse sm:text-[40px] lg:text-[46px]">
-          <span className="font-normal opacity-70">{lead} </span>
-          <span className="font-bold">{strong}</span>
+        <h2 className="mx-auto max-w-[16ch] font-display text-[32px] font-bold leading-[1.03] tracking-[-0.035em] text-ink-inverse sm:text-[42px] lg:text-[50px]">
+          {title}
         </h2>
         <p className="mx-auto mt-6 max-w-[620px] text-[15.5px] leading-relaxed text-ink-inverse-2">
           {text}
